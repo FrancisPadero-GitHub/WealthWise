@@ -121,6 +121,7 @@
   <script src="assets/js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <?php
+  
   if (isset($_SESSION['message']) && $_SESSION['code'] != '') {
   ?>
     <script>
@@ -128,7 +129,7 @@
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 5000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
