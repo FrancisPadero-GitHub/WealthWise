@@ -1,5 +1,5 @@
 <?php
-include("../dB/config.php");
+include("../database/config.php");
 session_start();
 
 if(isset($_POST['register'])){

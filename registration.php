@@ -55,11 +55,11 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
-                    <p class="text-center small">Enter your personal details to create account</p>
+                    <h5 class="card-title text-center pb-0 fs-4">WealthWise</h5>
+                    <p class="text-center small">Create an Account</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" action="./controller/createAccount.php" method="POST" novalidate>
+                  <form class="row g-3 needs-validation" action="./controller/registerProcess.php" method="POST" novalidate>
                     <div class="col-12">
                       <label for="firstName" class="form-label">First Name</label>
                       <input type="text" name="firstname" class="form-control" id="firstName" required>
@@ -78,7 +78,7 @@
                       <input type="email" name="email" class="form-control" id="yourEmail" required>
                       <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                     </div>
-                    
+
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
@@ -88,32 +88,8 @@
                     <div class="col-12">
                       <label for="confirmPassword" class="form-label">Confirm Password</label>
                       <input type="password" name="cpassword" class="form-control" id="confirmPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
+                      <div class="invalid-feedback">Please cofirm your password!</div>
                     </div>
-
-                    <div class="col-12">
-                      <label for="phonenumber" class="form-label">Phone Number</label>
-                      <input type="text" name="phonenumber" class="form-control" id="phonenumber" required>
-                      <div class="invalid-feedback">Please enter Phone Number!</div>
-                    </div>
-
-                    <div class="col-12">
-                     <label class="col-12 col-form-label">Select</label>
-                     <div class="col-12">
-                        <select class="form-select" name="gender" aria-label="Default select example">
-                      <option selected>Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <label for="inputDate" class="col-12 col-form-label">Birthday</label>
-                  <div class="col-12">
-                    <input type="date" name="birthday" class="form-control">
-                  </div>
-                </div>
 
                     <div class="col-12">
                       <div class="form-check">
@@ -122,6 +98,7 @@
                         <div class="invalid-feedback">You must agree before submitting.</div>
                       </div>
                     </div>
+
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit" name="register">Create Account</button>
                     </div>
@@ -157,30 +134,30 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <?php
-  if(isset($_SESSION['message']) && $_SESSION['code'] !='') {
-      ?>
-      <script>
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "<?php echo $_SESSION['code']; ?>",
-          title: "<?php echo $_SESSION['message']; ?>"
-        });
-      </script>
-      <?php
-      unset($_SESSION['message']);
-      unset($_SESSION['code']);
-  }     
-?>
+  if (isset($_SESSION['message']) && $_SESSION['code'] != '') {
+  ?>
+    <script>
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "<?php echo $_SESSION['code']; ?>",
+        title: "<?php echo $_SESSION['message']; ?>"
+      });
+    </script>
+  <?php
+    unset($_SESSION['message']);
+    unset($_SESSION['code']);
+  }
+  ?>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

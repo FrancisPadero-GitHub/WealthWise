@@ -1,6 +1,6 @@
 <?php
 session_start();
-include(__DIR__ . '/../dB/config.php');
+include(__DIR__ . '/../database/config.php');
 
 if(!isset($_SESSION['auth'])){
     $_SESSION['message'] = "Login to access dashboard";
