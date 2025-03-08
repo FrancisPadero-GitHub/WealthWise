@@ -2,59 +2,51 @@
 session_start();
 include("../database/config.php");
 
-if(isset($_POST['login'])){
-$email = $_POST['email'];
-$password = $_POST['password'];
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-$login_query = "SELECT `userId`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `verification`, `role` FROM `users` WHERE email = '$email' AND password = '$password' LIMIT 1;";
+    // Use prepared statements for security
+    $login_query = "SELECT `userid`, `first_name`, `last_name`, `email`, `password` FROM `Accounts` WHERE email = ? LIMIT 1";
+    $stmt = mysqli_prepare($con, $login_query);
 
-$login_query_run = mysqli_query($con, $login_query);
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
-if($login_query_run){
-    
-    if(mysqli_num_rows($login_query_run) > 0){
-        $data = mysqli_fetch_assoc($login_query_run);
+        if (mysqli_num_rows($result) > 0) {
+            $data = mysqli_fetch_assoc($result);
 
-        $userId = $data['userId'];
-        $fullName = $data['firstName'] . ' ' . $data['lastName'];
-        $emailAddress = $data['email'];
-        $verification= $data['verification'];
-        $userRole = $data['role'];
+            // Verify the hashed password
+            if (password_verify($password, $data['password'])) {
+                $_SESSION['auth'] = true;
+                $_SESSION['authUser'] = [
+                    'userid' => $data['userid'],
+                    'first_name' => $data['first_name'],
+                    'last_namename' => $data['last_namename'],
+                    'email' => $data['email']
+                ];
 
-        $_SESSION['auth'] = true;  
-        $_SESSION['userRole'] = $userRole;
-        $_SESSION['authUser'] = [
-            'userId' => $userId,
-            'fullName' => $fullName,
-            'emailAddress' => $emailAddress,
-        ]; 
-
-        if($userRole == 'admin'){
-            header("Location: ../view/admin/index.php");
+                header("Location: ../view/index.php"); // Redirect to a user dashboard
+                exit();
+            } else {
+                $_SESSION['message'] = "Invalid email or Password";
+                $_SESSION['code'] = "error";
+                header("Location: ../view/login.php");
+                exit();
+            }
+        } else {
+            $_SESSION['message'] = "Invalid email or Password";
+            $_SESSION['code'] = "error";
+            header("Location: ../view/login.php");
+            exit();
         }
-        elseif($userRole == 'user'){
-            header("Location: ../view/users/index.php");
-        }
-        else{
-            header("Location: ../login.php");
-        }
-        exit(); 
-    }
-    else{
-        $_SESSION['message'] = "Invalid Email Address or Password";
+    } else {
+        $_SESSION['message'] = "Database error: " . mysqli_error($con);
         $_SESSION['code'] = "error";
-        header("Location: ../login.php");
+        header("Location: ../view/login.php");
+        exit();
     }
-}
-else{
-    $_SESSION['message'] = "Error executing login query" . mysqli_error($con);
-    $_SESSION['code'] = "error";
-    header("Location: ../login.php");
-}
-}
-else{
-    $_SESSION['message'] = "Error executing login query" . mysqli_error($con);
-    $_SESSION['code'] = "error";
-    header("Location: ../login.php");
 }
 ?>

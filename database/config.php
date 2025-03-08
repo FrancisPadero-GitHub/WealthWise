@@ -3,11 +3,9 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "test";
+$database = "wealthwise";
 
 $con = new mysqli($servername, $username, $password, $database);
 
-if ($con -> connect_error){
-    
+if ($con->connect_error) {
 }
-?>

@@ -2,20 +2,9 @@
 session_start();
 include(__DIR__ . '/../database/config.php');
 
-if(!isset($_SESSION['auth'])){
-    $_SESSION['message'] = "Login to access dashboard";
+if (!isset($_SESSION['auth'])) {
+    $_SESSION['message'] = "Please login first";
     $_SESSION['code'] = "error";
-    header('Location: ../../login.php');
-    exit();
-}else
-{
-if($_SESSION['userRole'] != 'admin')
-{
-    $_SESSION['message'] = "You are not authorized as ADMIN";
-    $_SESSION['code'] = "error";
-    header('Location: ../../login.php');
+    header('Location: ../view/login.php');
     exit();
 }
-}
-
-?>
