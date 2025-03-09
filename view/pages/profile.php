@@ -2,8 +2,7 @@
   <h1>Profile</h1>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="index.php?page=dashboard">WealthWise</a></li>
-      <li class="breadcrumb-item"><a href="index.php?page=dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="index.php?page=dashboard">Home</a></li>
       <li class="breadcrumb-item active">Profile</li>
     </ol>
   </nav>
@@ -16,7 +15,7 @@
       <div class="card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-          <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+          <img src="../assets/img/gudetama.jpg" alt="Profile" class="rounded-circle">
           <h2>Padero & Lam</h2>
           <h3>R10</h3>
           <div class="social-links mt-2">

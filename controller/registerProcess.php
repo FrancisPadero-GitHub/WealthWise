@@ -1,5 +1,6 @@
 <?php
 include("../database/config.php");
+
 session_start();
 
 if (isset($_POST['register'])) {
@@ -13,7 +14,7 @@ if (isset($_POST['register'])) {
     if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($cpassword)) {
         $_SESSION['status'] = "All fields are required!";
         $_SESSION['status_code'] = "error";
-        header("Location: ../registration.php");
+        header("Location: ../view/registration.php");
         exit();
     }
 
@@ -21,7 +22,7 @@ if (isset($_POST['register'])) {
     if ($password !== $cpassword) {
         $_SESSION['status'] = "Passwords do not match!";
         $_SESSION['status_code'] = "error";
-        header("Location: ../registration.php");
+        header("Location: ../view/registration.php");
         exit();
     }
 
@@ -35,7 +36,7 @@ if (isset($_POST['register'])) {
     if (mysqli_num_rows($result) > 0) {
         $_SESSION['status'] = "email is already taken.";
         $_SESSION['status_code'] = "error";
-        header("Location: ../registration.php");
+        header("Location: ../view/registration.php");
         exit();
     }
 
@@ -53,18 +54,18 @@ if (isset($_POST['register'])) {
         if ($execute) {
             $_SESSION['status'] = "Registration Successful!";
             $_SESSION['status_code'] = "success";
-            header("Location: ../index.php");
+            header("Location: ../view/login.php");
             exit();
         } else {
             $_SESSION['status'] = "Database error: " . mysqli_error($conn);
             $_SESSION['status_code'] = "error";
-            header("Location: ../registration.php");
+            header("Location: ../view/registration.php");
             exit();
         }
     } else {
         $_SESSION['status'] = "Error preparing statement!";
         $_SESSION['status_code'] = "error";
-        header("Location: ../registration.php");
+        header("Location: ../view/registration.php");
         exit();
     }
 }

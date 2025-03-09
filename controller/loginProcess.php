@@ -24,10 +24,10 @@ if (isset($_POST['login'])) {
                 $_SESSION['authUser'] = [
                     'userid' => $data['userid'],
                     'first_name' => $data['first_name'],
-                    'last_namename' => $data['last_namename'],
+                    'last_namename' => $data['last_name'],
                     'email' => $data['email']
                 ];
-
+                
                 header("Location: ../view/index.php"); // Redirect to a user dashboard
                 exit();
             } else {
@@ -49,4 +49,3 @@ if (isset($_POST['login'])) {
         exit();
     }
 }
-?>

@@ -5,22 +5,23 @@
 
       <li class="nav-item">
         <a class="nav-link active" href="index.php?page=dashboard">
-          <i class="bi bi-wallet2"></i>
-          <span>Dashboard</span>
+          <i class="bi bi-house"></i>
+          <span>Home</span>
         </a>
       </li><!-- End Dashboard Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="index.php?page=transactions">
+          <i class="bi bi-card-list">
+          </i> <span>Records</span>
+        </a>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link" href="index.php?page=profile">
           <i class="bi bi-person"></i>
           <span>Profile</span>
-        </a>
-      </li><!-- End Profile Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link" href="index.php?page=transactions">
-          <i class="bi bi-card-list">
-          </i> <span>Transactions</span>
         </a>
       </li><!-- End Profile Nav -->
 
