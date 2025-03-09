@@ -11,12 +11,12 @@
       </li><!-- End Dashboard Nav -->
 
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="index.php?page=transactions">
           <i class="bi bi-card-list">
           </i> <span>Records</span>
         </a>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <a class="nav-link" href="index.php?page=profile">

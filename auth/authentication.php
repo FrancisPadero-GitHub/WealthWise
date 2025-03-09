@@ -1,5 +1,4 @@
 <?php
-session_start();
 include(__DIR__ . '/../database/config.php');
 
 if (!isset($_SESSION['auth'])) {

@@ -3,87 +3,105 @@
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>WealthWise</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="../assets/img/wealthwise.png" rel="icon">
-  <link href="../assets/img/wealthwise.png" rel="apple-touch-icon">
+  <link rel="icon" href="../assets/img/wealthwise.png">
+  <link rel="apple-touch-icon" href="../assets/img/wealthwise.png">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <!-- Google Fonts (Consolidated for better performance) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Nunito:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../assets/vendor/boxicons/css/boxicons.min.css">
+  <link rel="stylesheet" href="../assets/vendor/quill/quill.snow.css">
+  <link rel="stylesheet" href="../assets/vendor/quill/quill.bubble.css">
+  <link rel="stylesheet" href="../assets/vendor/remixicon/remixicon.css">
+  <link rel="stylesheet" href="../assets/vendor/simple-datatables/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 
   <!-- Template Main CSS File -->
-  <link href="../assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================s
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
+
   <?php
-  include("../auth/authentication.php"); // this is to redirect users if they try to access admin page
+  // Start session at the top
+  session_start();
+
+  // Include essential files
+  include("../auth/authentication.php");
   include("../database/config.php");
-  include("../controller/crud.php");
+  include("../controller/crud.php"); // dko sure ani walaon guro ko ni in the future 
 
   include("./includes/topbar.php");
   include("./includes/sidebar.php");
   ?>
+
   <main id="main" class="main">
     <?php
-
-    // Load the page dynamically based on the URL
-    $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+    // Load the page dynamically based on URL
+    $page = $_GET['page'] ?? 'dashboard'; // Use null coalescing for cleaner syntax
     $path = "./pages/$page.php";
-    // fall back if the pages doesn't exists
+
     if (file_exists($path)) {
       include($path);
     } else {
-      include('./pages/404.php'); // Fallback to a 404 page
+      include('./pages/404.php'); // Fallback to 404 page
     }
     ?>
   </main>
 
-
   <?php include("./includes/footer.php"); ?>
 
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="../assets/vendor/echarts/echarts.min.js"></script>
+  <script src="../assets/vendor/quill/quill.js"></script>
+  <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+  <!-- SweetAlert for Toast Notifications -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <?php if (!empty($_SESSION['message']) && !empty($_SESSION['code'])): ?>
+    <script>
+      Swal.fire({
+        icon: "<?php echo $_SESSION['code']; ?>", // 'success' or 'error'
+        title: "<?php echo $_SESSION['message']; ?>",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+    </script>
+  <?php
+    unset($_SESSION['message'], $_SESSION['code']); // Cleaner unset
+  endif;
+  ?>
+
 </body>
-
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-<!-- Vendor JS Files -->
-<script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/vendor/chart.js/chart.umd.js"></script>
-<script src="../assets/vendor/echarts/echarts.min.js"></script>
-<script src="../assets/vendor/quill/quill.js"></script>
-<script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="../assets/vendor/tinymce/tinymce.min.js"></script>
-<script src="../assets/vendor/php-email-form/validate.js"></script>
-
-<!-- Template Main JS File -->
-<script src="../assets/js/main.js"></script>
-
-
 
 </html>

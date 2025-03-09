@@ -52,19 +52,19 @@ if (isset($_POST['register'])) {
         $execute = mysqli_stmt_execute($stmt);
 
         if ($execute) {
-            $_SESSION['status'] = "Registration Successful!";
-            $_SESSION['status_code'] = "success";
+            $_SESSION['message'] = "Registration Successful!";
+            $_SESSION['code'] = "success";
             header("Location: ../view/login.php");
             exit();
         } else {
-            $_SESSION['status'] = "Database error: " . mysqli_error($conn);
-            $_SESSION['status_code'] = "error";
+            $_SESSION['message'] = "Database error: " . mysqli_error($conn);
+            $_SESSION['code'] = "error";
             header("Location: ../view/registration.php");
             exit();
         }
     } else {
-        $_SESSION['status'] = "Error preparing statement!";
-        $_SESSION['status_code'] = "error";
+        $_SESSION['message'] = "Error preparing statement!";
+        $_SESSION['code'] = "error";
         header("Location: ../view/registration.php");
         exit();
     }
