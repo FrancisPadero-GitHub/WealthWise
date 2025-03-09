@@ -191,6 +191,7 @@
                     <th scope="col">Description</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Type</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -200,14 +201,19 @@
                         <th scope="row">
                           <a href="#"><?php echo htmlspecialchars('#' . $row['transaction_id']); ?></a>
                         </th>
-                        <td><?php echo htmlspecialchars($row['category']); ?></td>
+                        <td ><?php echo htmlspecialchars($row['category']); ?></td>
                         <td><?php echo htmlspecialchars($row['description']); ?></td>
                         <td>
-                          <span style="color: <?php echo $row['amount'] < 0 ? 'red' : 'green'; ?>;">
+                          <span style="color: <?php echo $row['amount'] < 0 ? 'red' : 'green'; ?>; font-weight: bold; ">
                             <?php echo number_format($row['amount'], 2); ?>
                           </span>
                         </td>
                         <td><?php echo date('F, d, Y', strtotime($row['date'])); ?></td>
+                        <td>
+                          <span class="badge bg-<?php echo $row['transaction'] === 'expense' ? 'danger' : ($row['transaction'] === 'income' ? 'success' : 'secondary'); ?>">
+                            <?php echo htmlspecialchars($row['transaction']); ?>
+                          </span>
+                        </td>
                       </tr>
                     <?php endwhile; ?>
                   <?php else: ?>

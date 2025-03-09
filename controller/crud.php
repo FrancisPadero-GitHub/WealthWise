@@ -14,7 +14,7 @@ if (isset($_SESSION['authUser']['userid'])) {
 $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
 
 // Base SQL query
-$sql = "SELECT transaction_id, category, description, amount, date 
+$sql = "SELECT *
         FROM transactions 
         WHERE userid = ?";
 // Apply date filters
@@ -117,5 +117,41 @@ if ($stmt4) {
   $_SESSION['code'] = "error";
 }
 
+// fetch profile info
+$sql5 = "SELECT * 
+         FROM `accounts` 
+         WHERE `userid` = ?";
 
-/** CRUD */
+$stmt5 = $conn->prepare($sql5);
+if ($stmt5) {
+  $stmt5->bind_param("i", $userid);
+
+  if ($stmt5->execute()) {
+    $result5 = $stmt5->get_result();
+
+    if ($result5->num_rows > 0) {
+      $data = $result5->fetch_assoc();
+
+      // Extract data
+      $firstName = $data['first_name'];
+      $lastName = $data['last_name'];
+      $balance = $data['balance'];
+      $email = $data['email'];
+
+      // Success notification
+      // $_SESSION['message'] = "User data fetched successfully!";
+      // $_SESSION['code'] = "success";
+    } else {
+      $_SESSION['message'] = "No user found with the given ID!";
+      $_SESSION['code'] = "info";
+    }
+  } else {
+    $_SESSION['message'] = "Failed to execute statement!";
+    $_SESSION['code'] = "error";
+  }
+
+  $stmt5->close();
+} else {
+  $_SESSION['message'] = "Error preparing statement!";
+  $_SESSION['code'] = "error";
+}
