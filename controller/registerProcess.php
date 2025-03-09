@@ -27,7 +27,7 @@ if (isset($_POST['register'])) {
 
     // Check if email already exists
     $checkQuery = "SELECT * FROM `accounts` WHERE `email` = ?";
-    $stmt = mysqli_prepare($con, $checkQuery);
+    $stmt = mysqli_prepare($conn, $checkQuery);
     mysqli_stmt_bind_param($stmt, "s", $email);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
@@ -44,7 +44,7 @@ if (isset($_POST['register'])) {
 
     // Insert new user into the database
     $query = "INSERT INTO `accounts`(`first_name`, `last_name`, `email`, `password`) VALUES (?, ?, ?, ?)";
-    $stmt = mysqli_prepare($con, $query);
+    $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "ssss", $firstname, $lastname, $email, $hashedPassword);
@@ -56,7 +56,7 @@ if (isset($_POST['register'])) {
             header("Location: ../index.php");
             exit();
         } else {
-            $_SESSION['status'] = "Database error: " . mysqli_error($con);
+            $_SESSION['status'] = "Database error: " . mysqli_error($conn);
             $_SESSION['status_code'] = "error";
             header("Location: ../registration.php");
             exit();

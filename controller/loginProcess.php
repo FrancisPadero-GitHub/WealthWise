@@ -8,7 +8,7 @@ if (isset($_POST['login'])) {
 
     // Use prepared statements for security
     $login_query = "SELECT `userid`, `first_name`, `last_name`, `email`, `password` FROM `Accounts` WHERE email = ? LIMIT 1";
-    $stmt = mysqli_prepare($con, $login_query);
+    $stmt = mysqli_prepare($conn, $login_query);
 
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "s", $email);
@@ -43,7 +43,7 @@ if (isset($_POST['login'])) {
             exit();
         }
     } else {
-        $_SESSION['message'] = "Database error: " . mysqli_error($con);
+        $_SESSION['message'] = "Database error: " . mysqli_error($conn);
         $_SESSION['code'] = "error";
         header("Location: ../view/login.php");
         exit();

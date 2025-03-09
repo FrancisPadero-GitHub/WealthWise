@@ -818,20 +818,20 @@ h6 {
   flex-grow: 0;
 }
 
-.dashboard .sales-card .card-icon {
-  color: #2eca6a;
+/* .dashboard .sales-card .card-icon {
+  color: #4154f1;
   background: #f6f6fe;
 }
 
 .dashboard .revenue-card .card-icon {
-  color: #ff6347;
+  color: #2eca6a;
   background: #e0f8e9;
 }
 
 .dashboard .customers-card .card-icon {
   color: #ff771d;
   background: #ffecdf;
-}
+} */
 
 /* Activity */
 .dashboard .activity {
@@ -913,7 +913,7 @@ h6 {
   margin-left: 95px;
 }
 
-/* Recent Sales */
+/* Transaction Records */
 .dashboard .recent-sales {
   font-size: 14px;
 }

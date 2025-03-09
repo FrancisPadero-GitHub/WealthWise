@@ -41,11 +41,15 @@
 <body>
   <?php
   include("../auth/authentication.php"); // this is to redirect users if they try to access admin page
+  include("../database/config.php");
+
+
   include("./includes/topbar.php");
   include("./includes/sidebar.php");
   ?>
   <main id="main" class="main">
     <?php
+
     // Load the page dynamically based on the URL
     $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
     $path = "./pages/$page.php";
