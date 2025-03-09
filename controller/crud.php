@@ -40,8 +40,6 @@ if ($balanceResult->num_rows > 0) {
   $balance = 0; // Default balance if no record found
 }
 
-
-
 // fetch expenses and income
 $sql3 = "SELECT SUM(amount) AS total FROM transactions WHERE userid = $userid AND transaction = 'expense'";
 $expense = $conn->query($sql3);
@@ -60,5 +58,15 @@ if ($income->num_rows > 0) {
 } else {
   $totalIncome = 0; // Default to 0 if no result
 }
+
+/** CRUDS */
+
+// add new record
+// if (isset($_POST['add_record'])) {
+//   $
+// }
+
+
+
 
 $conn->close();

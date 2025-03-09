@@ -1,17 +1,17 @@
 <div class="pagetitle">
   <h1>Dashboard</h1>
-  <!-- <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="">Home</a></li>
-      </ol>
-    </nav> -->
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="">Home</a></li>
+    </ol>
+  </nav>
 </div><!-- End Page Title -->
 
 <section class="section dashboard">
   <div class="row">
     <!-- Left side columns -->
     <div class="col-lg-8">
-      <div class="row">
+      <div class="row" style="margin-bottom: 0;">
 
         <!-- Balance Card -->
         <div class="col-xxl-4 col-md-6">
@@ -31,7 +31,7 @@
               <h5 class="card-title">Balance <span>| Cash</span></h5>
 
               <div class="d-flex align-items-center">
-                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color: #4154f1; background: #f6f6fe;">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                   <i class="bi bi-wallet2"></i>
                 </div>
                 <div class="ps-3">
@@ -65,7 +65,7 @@
               <h5 class="card-title">Total Expenses <span>| All Time</span></h5>
 
               <div class="d-flex align-items-center">
-                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color: #ff771d; background: #ffecdf;">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                   <i class="bi bi-cash-coin"></i>
                 </div>
                 <div class="ps-3">
@@ -96,7 +96,7 @@
               <h5 class="card-title">Total Income <span>| All Time</span></h5>
 
               <div class="d-flex align-items-center">
-                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color: #2eca6a; background: #e0f8e9;">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                   <i class="bi bi-cash-coin"></i>
                 </div>
                 <div class="ps-3">
@@ -112,7 +112,7 @@
 
       <!--Add Transaction -->
       <div class="text-end">
-        <a href="./addTransaction.php" class="btn btn-success">
+        <a href="index.php?page=add" class="btn btn-success">
           <i class="bi bi-plus-lg"></i> <!-- Bootstrap Plus Icon -->
         </a>
       </div>
