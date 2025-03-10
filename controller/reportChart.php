@@ -21,7 +21,7 @@ if ($stmt) {
     while ($row = $result->fetch_assoc()) {
       $expenses[] = [
         'date'  => $row['date'],
-        'total' => floatval($row['total'])
+        'total' => abs($row['total'])
       ];
     }
   }

@@ -10,7 +10,6 @@ $sql = "SELECT category, SUM(amount) AS total
         GROUP BY category";
 
 $stmt = $conn->prepare($sql);
-$userid = 1; // Adjust to the logged-in user ID
 $stmt->bind_param("i", $userid);
 $stmt->execute();
 $result = $stmt->get_result();
