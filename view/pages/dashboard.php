@@ -44,8 +44,10 @@
           </div>
         </div>
         <!-- End Balance Card -->
+
+        <!-- Balance Modal Card -->
         <div class="modal fade" id="editBalanceModal" tabindex="-1" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
 
               <form id="editBalanceForm" action="../controller/edit_balance.php" method="POST">
@@ -67,7 +69,7 @@
             </div>
           </div>
         </div>
-
+        <!-- End of Modal Card -->
 
         <!-- Total Expenses Card -->
         <div class="col-xxl-4 col-md-6">
@@ -137,11 +139,96 @@
 
       <!--Add Transaction -->
       <div class="text-end">
-        <a href="index.php?page=add" class="btn btn-success">
+        <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRecordModal">
           <i class="bi bi-plus-lg"></i> <!-- Bootstrap Plus Icon -->
         </a>
       </div>
+      <!-- Add new record modal -->
+      <div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addRecordModalLabel">New Record</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="../controller/addRecord.php" method="POST" novalidate>
+                <div class="row mb-3">
+                  <!-- Amount -->
+                  <div class="col-md-4">
+                    <label for="inputNumber" class="form-label">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="inputNumber" required>
+                  </div>
 
+                  <!-- Category -->
+                  <div class="col-md-4">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" name="category" aria-label="Default select example">
+                      <optgroup label="Daily Expenses">
+                        <option value="Food and Drinks">Food and Drinks</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="House Rent">House Rent</option>
+                        <option value="Transportation">Transportation</option>
+                      </optgroup>
+                      <optgroup label="Assets">
+                        <option value="Vehicle">Vehicle</option>
+                        <option value="Life and Entertainment">Life and Entertainment</option>
+                        <option value="Communication & PC">Communication & PC</option>
+                      </optgroup>
+                      <optgroup label="Financial">
+                        <option value="Financial Expenses">Financial Expenses</option>
+                        <option value="Investments">Investments</option>
+                        <option value="Income">Income</option>
+                        <option value="Others">Others</option>
+                      </optgroup>
+                    </select>
+                  </div>
+
+                  <!-- Transaction -->
+                  <div class="col-md-4">
+                    <label class="form-label">Transaction</label>
+                    <select class="form-select" name="transaction" aria-label="Default select example">
+                      <option value="Expense">Expense</option>
+                      <option value="Income">Income</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <!-- Date -->
+                  <div class="col-md-6">
+                    <label for="inputDate" class="form-label">Date</label>
+                    <input type="date" name="date" class="form-control" id="inputDate">
+                  </div>
+
+                  <!-- Account -->
+                  <div class="col-md-6">
+                    <label class="form-label">Account</label>
+                    <select class="form-select" name="account" aria-label="Default select example">
+                      <option value="Cash">Cash</option>
+                      <option value="Credit">Credit</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-12">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" name="description" id="description" style="height: 100px" maxlength="255"></textarea>
+                  </div>
+                </div>
+
+                <div class="text-end">
+                  <button type="submit" name="add_record" class="btn btn-success">
+                    <i class="bi bi-check-lg"></i> OK
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end of add new record modal -->
 
       <!-- Transaction Records -->
       <div class="col-12" style="margin-top: 10px;">
@@ -183,7 +270,7 @@
 
             <!-- Make table scrollable -->
             <div style="max-height: 400px; overflow-y: auto;">
-              <table class="table table-borderless">
+              <table class="table table-borderless table-hover">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -201,7 +288,7 @@
                         <th scope="row">
                           <a href="#"><?php echo htmlspecialchars('#' . $row['transaction_id']); ?></a>
                         </th>
-                        <td ><?php echo htmlspecialchars($row['category']); ?></td>
+                        <td><?php echo htmlspecialchars($row['category']); ?></td>
                         <td><?php echo htmlspecialchars($row['description']); ?></td>
                         <td>
                           <span style="color: <?php echo $row['amount'] < 0 ? 'red' : 'green'; ?>; font-weight: bold; ">
