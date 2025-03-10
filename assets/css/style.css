@@ -1234,3 +1234,13 @@ h6 {
 .form-label {
   font-weight: bold;
 }
+
+.total-expenses {
+  font-weight: 500;
+  color: tomato; /* Bootstrap 'text-danger' color */
+  background-color: #ffecdf; /* Light red background */
+  padding: 7px;
+  border-radius: 8px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}

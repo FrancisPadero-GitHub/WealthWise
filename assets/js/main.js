@@ -335,7 +335,11 @@
     setTimeout(() => {
       new ResizeObserver(function () {
         select(".echart", true).forEach((getEchart) => {
-          echarts.getInstanceByDom(getEchart).resize();
+          const chart = echarts.getInstanceByDom(getEchart);
+          if (chart) {
+            // ✅ Check if chart exists
+            chart.resize();
+          }
         });
       }).observe(mainContainer);
     }, 200);
@@ -387,28 +391,34 @@
     }
   });
   // when user hit the submit button
-  document
-    .getElementById("editRecordForm")
-    .addEventListener("submit", (event) => {
-      event.preventDefault(); // Prevent default form submission
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("editRecordForm");
 
-      const formData = new FormData(event.target);
+    if (form) {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
 
-      fetch("../controller/updateRecord.php", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            console.log("Record updated successfully");
-            location.reload(); // Reload table to reflect changes
-          } else {
-            console.error("Failed to update record:", data.error);
-          }
+        const formData = new FormData(event.target);
+
+        fetch("../controller/updateRecord.php", {
+          method: "POST",
+          body: formData,
         })
-        .catch((error) => console.error("Error updating record:", error));
-    });
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              console.log("Record updated successfully");
+              location.reload(); // Reload table to reflect changes
+            } else {
+              console.error("Failed to update record:", data.error);
+            }
+          })
+          .catch((error) => console.error("Error updating record:", error));
+      });
+    } else {
+      console.error("Form with ID 'editRecordForm' not found!");
+    }
+  });
 
   // ✅ Handle delete submission
   document.addEventListener("DOMContentLoaded", () => {

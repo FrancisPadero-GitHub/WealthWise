@@ -1,23 +1,23 @@
 <?php
-include("../database/config.php");
-
-if (isset($_SESSION['authUser']['userid'])) {
-  $userid = intval($_SESSION['authUser']['userid']);
-} else {
-  $_SESSION['message'] = "UserID didn't initialize!";
+// Authentication Simple and userID assigning for global use
+if (!isset($_SESSION['auth']) || !isset($_SESSION['authUser']['userid'])) {
+  $_SESSION['message'] = "Please login first";
   $_SESSION['code'] = "error";
-  // header("Location: ../view/login.php");
-  // exit();
+  header('Location: ../view/login.php');
+  exit();
 }
 
-/** THIS IS FOR THE FILTER DATE FOR THE TRANSACTIONS TABLE */
-$filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+$userid = intval($_SESSION['authUser']['userid']);
 
-// Base SQL query
+
+
+/*** SELECT STATEMENTS ***/
+
+/** Transaction Records **/
+$filter = isset($_GET['filter']) ? $_GET['filter'] : '';
 $sql = "SELECT *
         FROM transactions 
         WHERE userid = ?";
-// Apply date filters
 if ($filter == 'today') {
   $sql .= " AND DATE(date) = CURDATE()";
 } elseif ($filter == 'month') {
@@ -26,10 +26,8 @@ if ($filter == 'today') {
   $sql .= " AND YEAR(date) = YEAR(CURDATE())";
 }
 
-// Add ORDER BY at the very end
 $sql .= " ORDER BY transaction_id DESC";
 
-// Prepare statement
 $stmt = $conn->prepare($sql);
 if ($stmt) {
   $stmt->bind_param("i", $userid);
@@ -47,8 +45,11 @@ if ($stmt) {
   $_SESSION['message'] = "Error preparing statement for transactions!";
   $_SESSION['code'] = "error";
 }
+/** END OF Transaction Records **/
 
-// Fetch the latest balance
+
+
+/** Account Balance **/
 $sql2 = "SELECT balance FROM accounts WHERE userid = ?";
 $stmt2 = $conn->prepare($sql2);
 if ($stmt2) {
@@ -74,8 +75,11 @@ if ($stmt2) {
   $_SESSION['message'] = "Error preparing statement for balance!";
   $_SESSION['code'] = "error";
 }
+/** END OF Account Balance **/
 
-// Fetch total expenses
+
+
+/** Expenses **/
 $sql3 = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'expense'";
 $stmt3 = $conn->prepare($sql3);
 if ($stmt3) {
@@ -95,8 +99,11 @@ if ($stmt3) {
   $_SESSION['message'] = "Error preparing statement for expenses!";
   $_SESSION['code'] = "error";
 }
+/** END OF Expenses **/
 
-// Fetch total income
+
+
+/** Income **/
 $sql4 = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'income'";
 $stmt4 = $conn->prepare($sql4);
 if ($stmt4) {
@@ -116,8 +123,11 @@ if ($stmt4) {
   $_SESSION['message'] = "Error preparing statement for income!";
   $_SESSION['code'] = "error";
 }
+/** END OF Income **/
 
-// fetch profile info
+
+
+/** Profile **/
 $sql5 = "SELECT * 
          FROM `accounts` 
          WHERE `userid` = ?";
@@ -155,6 +165,6 @@ if ($stmt5) {
   $_SESSION['message'] = "Error preparing statement!";
   $_SESSION['code'] = "error";
 }
-
+/** END OF Profile **/
 
 $conn->close();

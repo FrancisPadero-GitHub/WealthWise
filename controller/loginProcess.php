@@ -7,7 +7,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     // Use prepared statements for security
-    $login_query = "SELECT `userid`, `first_name`, `last_name`, `email`, `password` FROM `Accounts` WHERE email = ? LIMIT 1";
+    $login_query = "SELECT `userid`, `first_name`, `last_name`, `email`, `password` FROM `Accounts` WHERE email = ?";
     $stmt = mysqli_prepare($conn, $login_query);
 
     if ($stmt) {

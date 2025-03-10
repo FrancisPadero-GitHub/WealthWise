@@ -36,14 +36,12 @@
   session_start();
 
   // Include essential files
-  include("../auth/authentication.php");
   include("../database/config.php");
-  include("../controller/crud.php"); // dko sure ani walaon guro ko ni in the future 
+  include("../controller/getData.php"); // pra ni mka kuha ug select statements ang data sa tabales and everythings sa dashboard
 
   include("./includes/topbar.php");
   include("./includes/sidebar.php");
   ?>
-
   <main id="main" class="main">
     <?php
     // Load the page dynamically based on URL

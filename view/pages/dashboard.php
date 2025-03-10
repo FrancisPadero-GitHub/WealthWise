@@ -10,7 +10,7 @@
 <section class="section dashboard">
   <div class="row">
     <!-- Left side columns -->
-    <div class="col-lg-8">
+    <div class="col-lg-7">
       <div class="row" style="margin-bottom: 0;">
 
         <!-- Balance Card -->
@@ -143,6 +143,7 @@
           <i class="bi bi-plus-lg"></i> <!-- Bootstrap Plus Icon -->
         </a>
       </div>
+
       <!-- Add new record modal -->
       <div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -319,7 +320,7 @@
                   </button>
 
                   <!-- Update Button -->
-                  <button type="submit" name="update" class="btn btn-primary">
+                  <button type="submit" name="submit" class="btn btn-primary">
                     <i class="bi bi-pencil"></i> Update
                   </button>
                 </div>
@@ -378,7 +379,7 @@
               <table class="table table-borderless table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Category</th>
                     <th scope="col">Description</th>
                     <th scope="col">Amount</th>
@@ -503,14 +504,84 @@
         </div>
       </div><!-- End Reports -->
 
-
-
-
-
     </div> <!-- End Left side columns -->
 
     <!-- Right side columns -->
-    <div class="col-lg-4">
+    <div class="col-lg-5">
+
+      <!-- Money Traffic -->
+      <div class="card">
+        <!-- <div class="filter">
+          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+            <li class="dropdown-header text-start">
+              <h6>Filter</h6>
+            </li>
+            <li><a class="dropdown-item" href="#">Today</a></li>
+            <li><a class="dropdown-item" href="#">This Month</a></li>
+            <li><a class="dropdown-item" href="#">This Year</a></li>
+          </ul>
+        </div> -->
+
+        <div class="card-body pb-0">
+          <h5 class="card-title">Expense Structure </h5>
+          <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+          <script>
+            // Fetch data from PHP
+            async function loadChartData() {
+              try {
+                const response = await fetch('../controller/getChartData.php');
+                const data = await response.json();
+                console.log(data)
+                // Initialize ECharts
+                const chart = echarts.init(document.querySelector("#trafficChart"));
+                chart.setOption({
+                  tooltip: {
+                    trigger: 'item'
+                  },
+                  legend: {
+                    top: '5%',
+                    left: 'center'
+                  },
+                  series: [{
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                      show: false,
+                      position: 'center'
+                    },
+                    emphasis: {
+                      label: {
+                        show: true,
+                        fontSize: '18',
+                        fontWeight: 'bold'
+                      }
+                    },
+                    labelLine: {
+                      show: true
+                    },
+                    data: data
+                  }]
+                });
+              } catch (error) {
+                console.error('Error loading chart data:', error);
+              }
+            }
+
+            // Load data when DOM is ready
+            document.addEventListener("DOMContentLoaded", loadChartData);
+          </script>
+          <div class="text-center mb-3">
+            <h6 class="total-expenses">
+              Total Expenses: ₱ <?php echo number_format($totalExpense, 2); ?>
+            </h6>
+          </div>
+
+        </div>
+      </div>
+
 
       <!-- Budget Report -->
       <div class="card">
@@ -585,157 +656,6 @@
 
         </div>
       </div><!-- End Budget Report -->
-
-      <!-- Website Traffic -->
-      <div class="card">
-        <div class="filter">
-          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <li class="dropdown-header text-start">
-              <h6>Filter</h6>
-            </li>
-
-            <li><a class="dropdown-item" href="#">Today</a></li>
-            <li><a class="dropdown-item" href="#">This Month</a></li>
-            <li><a class="dropdown-item" href="#">This Year</a></li>
-          </ul>
-        </div>
-
-        <div class="card-body pb-0">
-          <h5 class="card-title">Money Traffic <span>| Today</span></h5>
-
-          <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-          <script>
-            document.addEventListener("DOMContentLoaded", () => {
-              echarts.init(document.querySelector("#trafficChart")).setOption({
-                tooltip: {
-                  trigger: 'item'
-                },
-                legend: {
-                  top: '5%',
-                  left: 'center'
-                },
-                series: [{
-                  name: 'Access From',
-                  type: 'pie',
-                  radius: ['40%', '70%'],
-                  avoidLabelOverlap: false,
-                  label: {
-                    show: false,
-                    position: 'center'
-                  },
-                  emphasis: {
-                    label: {
-                      show: true,
-                      fontSize: '18',
-                      fontWeight: 'bold'
-                    }
-                  },
-                  labelLine: {
-                    show: false
-                  },
-                  data: [{
-                      value: 1048,
-                      name: 'Food'
-                    },
-                    {
-                      value: 735,
-                      name: 'Transportation'
-                    },
-                    {
-                      value: 580,
-                      name: 'Salary'
-                    },
-                    {
-                      value: 484,
-                      name: 'Groceries'
-                    },
-                    {
-                      value: 300,
-                      name: 'Health'
-                    }
-                  ]
-                }]
-              });
-            });
-          </script>
-
-        </div>
-      </div><!-- End Website Traffic -->
-
-      <!-- Recent Activity -->
-      <div class="card">
-        <div class="filter">
-          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <li class="dropdown-header text-start">
-              <h6>Filter</h6>
-            </li>
-
-            <li><a class="dropdown-item" href="#">Today</a></li>
-            <li><a class="dropdown-item" href="#">This Month</a></li>
-            <li><a class="dropdown-item" href="#">This Year</a></li>
-          </ul>
-        </div>
-
-        <div class="card-body">
-          <h5 class="card-title">Recent Activity <span>| Today</span></h5>
-
-          <div class="activity">
-
-            <div class="activity-item d-flex">
-              <div class="activite-label">32 min</div>
-              <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-              <div class="activity-content">
-                Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
-              </div>
-            </div><!-- End activity item-->
-
-            <div class="activity-item d-flex">
-              <div class="activite-label">56 min</div>
-              <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-              <div class="activity-content">
-                Voluptatem blanditiis blanditiis eveniet
-              </div>
-            </div><!-- End activity item-->
-
-            <div class="activity-item d-flex">
-              <div class="activite-label">2 hrs</div>
-              <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-              <div class="activity-content">
-                Voluptates corrupti molestias voluptatem
-              </div>
-            </div><!-- End activity item-->
-
-            <div class="activity-item d-flex">
-              <div class="activite-label">1 day</div>
-              <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-              <div class="activity-content">
-                Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
-              </div>
-            </div><!-- End activity item-->
-
-            <div class="activity-item d-flex">
-              <div class="activite-label">2 days</div>
-              <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-              <div class="activity-content">
-                Est sit eum reiciendis exercitationem
-              </div>
-            </div><!-- End activity item-->
-
-            <div class="activity-item d-flex">
-              <div class="activite-label">4 weeks</div>
-              <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-              <div class="activity-content">
-                Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-              </div>
-            </div><!-- End activity item-->
-
-          </div>
-
-        </div>
-      </div><!-- End Recent Activity -->
 
     </div><!-- End Right side columns -->
   </div>
