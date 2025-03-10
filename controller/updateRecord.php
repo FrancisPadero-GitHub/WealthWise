@@ -77,9 +77,13 @@ function updateTransaction($conn, $id)
   $amount = ($transaction === 'expense') ? -abs($amount) : abs($amount);
 
   // ✅ Combine date and time into a single DATETIME value
-  $datetime = (!empty($date) && !empty($time))
-    ? date('Y-m-d H:i:s', strtotime("$date $time"))
-    : date('Y-m-d H:i:s');
+  if (!empty($date) && !empty($time)) {
+    $datetime = date('Y-m-d H:i:s', strtotime("$date $time"));
+  } elseif (!empty($date)) {
+    $datetime = date('Y-m-d H:i:s', strtotime("$date 00:00:00"));
+  } else {
+    $datetime = date('Y-m-d H:i:s');
+  }
 
   $query = "UPDATE transactions 
               SET amount = ?, category = ?, transaction = ?, date = ?, payment_type = ?, description = ?

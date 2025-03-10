@@ -334,8 +334,6 @@
       <!-- End of Edit Record Modal -->
 
 
-
-
       <!-- Transaction Records -->
       <div class="col-12" style="margin-top: 10px;">
         <div class="card recent-sales overflow-auto">
@@ -450,51 +448,84 @@
 
             <script>
               document.addEventListener("DOMContentLoaded", () => {
-                new ApexCharts(document.querySelector("#reportsChart"), {
-                  series: [{
-                    name: 'Expense',
-                    data: [11, 32, 45, 32, 34, 52, 41]
-                  }, {
-                    name: 'Income',
-                    data: [15, 11, 32, 18, 9, 24, 11]
-                  }],
-                  chart: {
-                    height: 350,
-                    type: 'area',
-                    toolbar: {
-                      show: false
-                    },
-                  },
-                  markers: {
-                    size: 4
-                  },
-                  colors: ['#ff771d', '#2eca6a'],
-                  fill: {
-                    type: "gradient",
-                    gradient: {
-                      shadeIntensity: 1,
-                      opacityFrom: 0.3,
-                      opacityTo: 0.4,
-                      stops: [0, 90, 100]
+                let reportChart;
+
+                async function loadReportData() {
+                  try {
+                    const response = await fetch(`../controller/reportChart.php`);
+                    const data = await response.json();
+
+                    const expenses = data.expenses.map(item => ({
+                      x: item.date,
+                      y: item.total
+                    }));
+
+                    const income = data.income.map(item => ({
+                      x: item.date,
+                      y: item.total
+                    }));
+
+                    // Destroy old chart if it exists
+                    if (reportChart) {
+                      reportChart.destroy();
                     }
-                  },
-                  dataLabels: {
-                    enabled: false
-                  },
-                  stroke: {
-                    curve: 'smooth',
-                    width: 2
-                  },
-                  xaxis: {
-                    type: 'datetime',
-                    categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                  },
-                  tooltip: {
-                    x: {
-                      format: 'dd/MM/yy HH:mm'
-                    },
+
+                    reportChart = new ApexCharts(document.querySelector("#reportsChart"), {
+                      series: [{
+                          name: 'Expense',
+                          data: expenses
+                        },
+                        {
+                          name: 'Income',
+                          data: income
+                        }
+                      ],
+                      chart: {
+                        height: 350,
+                        type: 'area',
+                        toolbar: {
+                          show: false
+                        },
+                      },
+                      markers: {
+                        size: 4
+                      },
+                      colors: ['#ff771d', '#2eca6a'],
+                      fill: {
+                        type: "gradient",
+                        gradient: {
+                          shadeIntensity: 1,
+                          opacityFrom: 0.3,
+                          opacityTo: 0.4,
+                          stops: [0, 90, 100]
+                        }
+                      },
+                      dataLabels: {
+                        enabled: false
+                      },
+                      stroke: {
+                        curve: 'smooth',
+                        width: 2
+                      },
+                      xaxis: {
+                        type: 'category'
+                      },
+                      tooltip: {
+                        x: {
+                          format: 'yyyy-MM-dd'
+                        },
+                      }
+                    });
+
+                    reportChart.render();
+
+                  } catch (error) {
+                    console.error('Error loading chart data:', error);
                   }
-                }).render();
+                }
+
+                // Load chart data on page load
+                loadReportData();
               });
             </script>
             <!-- End Line Chart -->
@@ -525,12 +556,12 @@
 
         <div class="card-body pb-0">
           <h5 class="card-title">Expense Structure </h5>
-          <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+          <div id="trafficChart" style="height: 50vh; width: 100%;" class="echart"></div>
           <script>
             // Fetch data from PHP
             async function loadChartData() {
               try {
-                const response = await fetch('../controller/getChartData.php');
+                const response = await fetch('../controller/expenseChart.php');
                 const data = await response.json();
                 console.log(data)
                 // Initialize ECharts
@@ -585,76 +616,49 @@
 
       <!-- Budget Report -->
       <div class="card">
-        <div class="filter">
-          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <li class="dropdown-header text-start">
-              <h6>Filter</h6>
-            </li>
+        <!-- Bar Chart -->
+        <div id="barChart"></div>
 
-            <li><a class="dropdown-item" href="#">Today</a></li>
-            <li><a class="dropdown-item" href="#">This Month</a></li>
-            <li><a class="dropdown-item" href="#">This Year</a></li>
-          </ul>
-        </div>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            fetch('../controller/expenseChart2.php')
+              .then(response => response.json())
+              .then(data => {
+                const categories = data.map(item => item.category);
+                const totals = data.map(item => item.total);
 
-        <div class="card-body pb-0">
-          <h5 class="card-title">Budget Report <span>| This Month</span></h5>
-
-          <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
-
-          <script>
-            document.addEventListener("DOMContentLoaded", () => {
-              var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                legend: {
-                  data: ['Allocated Budget', 'Actual Spending']
-                },
-                radar: {
-                  // shape: 'circle',
-                  indicator: [{
-                      name: 'Sales',
-                      max: 6500
-                    },
-                    {
-                      name: 'Administration',
-                      max: 16000
-                    },
-                    {
-                      name: 'Information Technology',
-                      max: 30000
-                    },
-                    {
-                      name: 'Customer Support',
-                      max: 38000
-                    },
-                    {
-                      name: 'Development',
-                      max: 52000
-                    },
-                    {
-                      name: 'Marketing',
-                      max: 25000
+                new ApexCharts(document.querySelector("#barChart"), {
+                  series: [{
+                    data: totals
+                  }],
+                  chart: {
+                    type: 'bar',
+                    height: 350
+                  },
+                  plotOptions: {
+                    bar: {
+                      borderRadius: 4,
+                      horizontal: true,
                     }
-                  ]
-                },
-                series: [{
-                  name: 'Budget vs spending',
-                  type: 'radar',
-                  data: [{
-                      value: [4200, 3000, 20000, 35000, 50000, 18000],
-                      name: 'Allocated Budget'
-                    },
-                    {
-                      value: [5000, 14000, 28000, 26000, 42000, 21000],
-                      name: 'Actual Spending'
+                  },
+                  dataLabels: {
+                    enabled: false
+                  },
+                  xaxis: {
+                    categories: categories
+                  },
+                  colors: ['#ff6384'],
+                  tooltip: {
+                    y: {
+                      formatter: (value) => `₱ ${value.toLocaleString()}`
                     }
-                  ]
-                }]
-              });
-            });
-          </script>
-
-        </div>
+                  }
+                }).render();
+              })
+              .catch(error => console.error('Error loading data:', error));
+          });
+        </script>
+        <!-- End Bar Chart -->
       </div><!-- End Budget Report -->
 
     </div><!-- End Right side columns -->
