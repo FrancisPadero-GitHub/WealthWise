@@ -155,3 +155,6 @@ if ($stmt5) {
   $_SESSION['message'] = "Error preparing statement!";
   $_SESSION['code'] = "error";
 }
+
+
+$conn->close();

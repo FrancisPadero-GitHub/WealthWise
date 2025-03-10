@@ -27,7 +27,7 @@ if (isset($_POST['login'])) {
                     'last_namename' => $data['last_name'],
                     'email' => $data['email']
                 ];
-                
+
                 header("Location: ../view/index.php"); // Redirect to a user dashboard
                 exit();
             } else {
@@ -49,3 +49,5 @@ if (isset($_POST['login'])) {
         exit();
     }
 }
+
+$conn->close();

@@ -7,7 +7,7 @@
  */
 
 (function () {
-  "use strict";
+  ("use strict");
 
   /**
    * Easy selector helper function
@@ -340,10 +340,115 @@
       }).observe(mainContainer);
     }, 200);
   }
-  
+
   // Manual added prancisss
+  // Edit Transaction
+  document.addEventListener("DOMContentLoaded", () => {
+    // Get all rows with the class "transaction-row"
+    const rows = document.querySelectorAll(".transaction-row");
 
+    rows.forEach((row) => {
+      row.addEventListener("click", () => {
+        // Get the transaction ID from the row's data-id attribute
+        const transactionId = row.getAttribute("data-id");
+        console.log("Transaction ID:", transactionId);
 
-  
-  
+        // Open the edit modal and populate data
+        openEditModal(transactionId);
+      });
+    });
+
+    // Function to open the Edit Modal
+    function openEditModal(transactionId) {
+      // Example: Fetch transaction data from backend using transactionId
+      fetch(`../controller/updateRecord.php?id=${transactionId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Populate the modal fields
+          document.getElementById("editInputNumber").value = data.amount;
+          document.getElementById("editCategory").value = data.category;
+          document.getElementById("editTransaction").value = data.transaction; // Make sure the ID matches
+          document.getElementById("editInputDate").value =
+            data.date.split(" ")[0]; // Extract date part only
+          document.getElementById("editAccount").value = data.payment_type; // Make sure 'editAccount' matches the select ID
+          document.getElementById("editDescription").value = data.description;
+          document.getElementById("editTransactionId").value =
+            data.transaction_id; // For tracking the ID
+
+          // Show the modal
+          const modal = new bootstrap.Modal(
+            document.getElementById("editRecordModal")
+          );
+          modal.show();
+        })
+        .catch((error) =>
+          console.error("Error loading transaction data:", error)
+        );
+    }
+  });
+  // when user hit the submit button
+  document
+    .getElementById("editRecordForm")
+    .addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent default form submission
+
+      const formData = new FormData(event.target);
+
+      fetch("../controller/updateRecord.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            console.log("Record updated successfully");
+            location.reload(); // Reload table to reflect changes
+          } else {
+            console.error("Failed to update record:", data.error);
+          }
+        })
+        .catch((error) => console.error("Error updating record:", error));
+    });
+
+  // ✅ Handle delete submission
+  document.addEventListener("DOMContentLoaded", () => {
+    const deleteTransactionBtn = document.getElementById(
+      "deleteTransactionBtn"
+    );
+
+    if (deleteTransactionBtn) {
+      deleteTransactionBtn.addEventListener("click", () => {
+        const transactionId =
+          document.getElementById("editTransactionId").value;
+
+        if (
+          transactionId &&
+          confirm("Are you sure you want to delete this record?")
+        ) {
+          fetch("../controller/updateRecord.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `delete=true&transaction_id=${encodeURIComponent(
+              transactionId
+            )}`,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                console.log("Record deleted successfully");
+                location.reload(); // ✅ Reload table after deletion
+              } else {
+                console.error("Failed to delete record:", data.error);
+              }
+            })
+            .catch(async (error) => {
+              const responseText = await error.response?.text();
+              console.error("Error deleting record:", responseText || error);
+            });
+        }
+      });
+    }
+  });
 })();

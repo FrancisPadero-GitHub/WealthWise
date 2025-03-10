@@ -69,3 +69,5 @@ if (isset($_POST['register'])) {
         exit();
     }
 }
+
+$conn->close();

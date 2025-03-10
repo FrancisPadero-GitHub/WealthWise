@@ -230,6 +230,111 @@
       </div>
       <!-- end of add new record modal -->
 
+
+
+      <!-- Update Edit Transaction Modal -->
+      <!-- Modal -->
+      <!-- Edit Record Modal -->
+      <div class="modal fade" id="editRecordModal" tabindex="-1" aria-labelledby="editRecordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editRecordModalLabel">Edit Record</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="editRecordForm" action="../controller/updateRecord.php" method="POST" novalidate>
+                <!-- Hidden ID field -->
+                <input type="hidden" name="transaction_id" id="editTransactionId">
+
+                <div class="row mb-3">
+                  <!-- Amount -->
+                  <div class="col-md-4">
+                    <label for="editInputNumber" class="form-label">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="editInputNumber" required>
+                  </div>
+
+                  <!-- Category -->
+                  <div class="col-md-4">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" name="category" id="editCategory" aria-label="Default select example">
+                      <optgroup label="Daily Expenses">
+                        <option value="Food and Drinks">Food and Drinks</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="House Rent">House Rent</option>
+                        <option value="Transportation">Transportation</option>
+                      </optgroup>
+                      <optgroup label="Assets">
+                        <option value="Vehicle">Vehicle</option>
+                        <option value="Life and Entertainment">Life and Entertainment</option>
+                        <option value="Communication & PC">Communication & PC</option>
+                      </optgroup>
+                      <optgroup label="Financial">
+                        <option value="Financial Expenses">Financial Expenses</option>
+                        <option value="Investments">Investments</option>
+                        <option value="Income">Income</option>
+                        <option value="Others">Others</option>
+                      </optgroup>
+                    </select>
+                  </div>
+
+                  <!-- Transaction -->
+                  <div class="col-md-4">
+                    <label class="form-label">Transaction</label>
+                    <select class="form-select" name="transaction" id="editTransaction" aria-label="Default select example">
+                      <option value="expense">Expense</option>
+                      <option value="income">Income</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <!-- Date -->
+                  <div class="col-md-6">
+                    <label for="editInputDate" class="form-label">Date</label>
+                    <input type="date" name="date" class="form-control" id="editInputDate">
+                  </div>
+
+                  <!-- Account -->
+                  <div class="col-md-6">
+                    <label class="form-label">Account</label>
+                    <select class="form-select" name="account" id="editAccount" aria-label="Default select example">
+                      <option value="cash">Cash</option>
+                      <option value="credit">Credit</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-12">
+                    <label for="editDescription" class="form-label">Description</label>
+                    <textarea class="form-control" name="description" id="editDescription" style="height: 100px" maxlength="255"></textarea>
+                  </div>
+                </div>
+
+                <div class="text-end">
+                  <!-- Delete Button -->
+                  <button type="button" name="delete" class="btn btn-danger delete-btn" id="deleteTransactionBtn">
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+
+                  <!-- Update Button -->
+                  <button type="submit" name="update" class="btn btn-primary">
+                    <i class="bi bi-pencil"></i> Update
+                  </button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- End of Edit Record Modal -->
+
+
+
+
       <!-- Transaction Records -->
       <div class="col-12" style="margin-top: 10px;">
         <div class="card recent-sales overflow-auto">
@@ -284,8 +389,8 @@
                 <tbody>
                   <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
-                      <tr>
-                        <th scope="row">
+                      <tr class="transaction-row" data-id="<?php echo $row['transaction_id']; ?>" style="cursor: pointer;">
+                        <th scope=" row">
                           <a href="#"><?php echo htmlspecialchars('#' . $row['transaction_id']); ?></a>
                         </th>
                         <td><?php echo htmlspecialchars($row['category']); ?></td>
@@ -305,7 +410,7 @@
                     <?php endwhile; ?>
                   <?php else: ?>
                     <tr>
-                      <td colspan="5" class="text-center">No transactions found.</td>
+                      <td colspan="6" class="text-center">No transactions found.</td>
                     </tr>
                   <?php endif; ?>
                 </tbody>

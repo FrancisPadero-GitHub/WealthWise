@@ -8,7 +8,6 @@ if (isset($_SESSION['authUser']['userid'])) {
 } else {
   $_SESSION['message'] = "UserID didn't initialize!";
   $_SESSION['code'] = "error";
-
 }
 
 // Add new record
