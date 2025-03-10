@@ -461,4 +461,24 @@
       });
     }
   });
+  // if the balance go under 0 places another text
+  document.addEventListener("DOMContentLoaded", () => {
+    // Get balance value from the HTML
+    const balance = parseFloat(
+      document.getElementById("currentBalance").innerText.replace(/[₱,]/g, "")
+    );
+
+    const balanceStatus = document.getElementById("balanceStatus");
+    const statusText = document.getElementById("statusText");
+
+    if (balance < 0) {
+      balanceStatus.classList.remove("text-success");
+      balanceStatus.classList.add("text-danger"); // Change color to red if negative
+      balanceStatus.innerText = "You are now in debt";
+      statusText.style.display = "none"; // Hide the 'increase' text
+    }
+  });
+
+
+  // 
 })();

@@ -38,24 +38,9 @@
                   <h6 id="currentBalance">₱ <?php echo number_format($balance, 2); ?></h6>
                   <span id="balanceStatus" class="text-success small pt-1 fw-bold">Debt Free</span>
                 </div>
-                <!-- if the balance go under 0 places another text -->
+
                 <script>
-                  document.addEventListener("DOMContentLoaded", () => {
-                    // Get balance value from the HTML
-                    const balance = parseFloat(
-                      document.getElementById("currentBalance").innerText.replace(/[₱,]/g, "")
-                    );
 
-                    const balanceStatus = document.getElementById("balanceStatus");
-                    const statusText = document.getElementById("statusText");
-
-                    if (balance < 0) {
-                      balanceStatus.classList.remove("text-success");
-                      balanceStatus.classList.add("text-danger"); // Change color to red if negative
-                      balanceStatus.innerText = "You are now in debt";
-                      statusText.style.display = "none"; // Hide the 'increase' text
-                    }
-                  });
                 </script>
 
               </div>
@@ -396,7 +381,7 @@
               <table class="table table-borderless table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col">#</th> <!-- Row number -->
                     <th scope="col">Category</th>
                     <th scope="col">Description</th>
                     <th scope="col">Amount</th>
@@ -406,10 +391,14 @@
                 </thead>
                 <tbody>
                   <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <?php
+                    $rowNumber = $result->num_rows; // Start from the highest number
+                    while ($row = $result->fetch_assoc()):
+                    ?>
                       <tr class="transaction-row" data-id="<?php echo $row['transaction_id']; ?>" style="cursor: pointer;">
-                        <th scope=" row">
-                          <a href="#"><?php echo htmlspecialchars('#' . $row['transaction_id']); ?></a>
+                        <th scope="row">
+                          <!-- Show row number in DESC order -->
+                          <a href="#"><?php echo $rowNumber; ?></a>
                         </th>
                         <td><?php echo htmlspecialchars($row['category']); ?></td>
                         <td><?php echo htmlspecialchars($row['description']); ?></td>
@@ -425,6 +414,8 @@
                           </span>
                         </td>
                       </tr>
+                      <?php $rowNumber--; // Decrement row number to reflect DESC order 
+                      ?>
                     <?php endwhile; ?>
                   <?php else: ?>
                     <tr>
@@ -434,6 +425,8 @@
                 </tbody>
               </table>
             </div>
+
+
             <!-- End scrollable table -->
 
           </div>
