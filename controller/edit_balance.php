@@ -14,7 +14,7 @@ if (isset($_POST['edit_balance'])) {
   $balance = floatval($_POST['balance'] ?? 0);
 
   if ($balance < 0) {
-    $_SESSION['message'] = "Balance cannot be negative!";
+    $_SESSION['message'] = "Balance cannot be manually set to negative!";
     $_SESSION['code'] = "error";
     header("Location: ../view/index.php");
     exit();

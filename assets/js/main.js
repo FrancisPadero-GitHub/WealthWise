@@ -471,12 +471,23 @@
     const balanceStatus = document.getElementById("balanceStatus");
     const statusText = document.getElementById("statusText");
 
-    if (balance < 0) {
-      balanceStatus.classList.remove("text-success");
-      balanceStatus.classList.add("text-danger"); // Change color to red if negative
-      balanceStatus.innerText = "You are now in debt";
-      statusText.style.display = "none"; // Hide the 'increase' text
-    }
+   if (balance < 0) {
+     balanceStatus.classList.remove("text-success", "text-warning");
+     balanceStatus.classList.add("text-danger"); // Change color to red if negative
+     balanceStatus.innerText = "You are now in debt";
+
+   } else if (balance === 0) {
+     balanceStatus.classList.remove("text-success", "text-danger");
+     balanceStatus.classList.add("text-warning"); // Change color to orange if zero
+     balanceStatus.innerText = "Broke as fuck";
+
+   } else {
+     balanceStatus.classList.remove("text-danger", "text-warning");
+     balanceStatus.classList.add("text-success"); // Change color to green if positive
+     balanceStatus.innerText = "Debt free sheesh";
+
+   }
+
   });
 
 

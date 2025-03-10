@@ -1244,3 +1244,38 @@ h6 {
   display: inline-block;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
+
+/* Reduce font size for both Add and Edit modals */
+#addRecordModal .modal-content,
+#editRecordModal .modal-content {
+  font-size: 15px;
+}
+
+#editRecordModalLabel,
+#addRecordModalLabel {
+  font-weight: bold;
+}
+
+/* Reduce font size for form labels */
+#addRecordModal .form-label,
+#editRecordModal .form-label {
+  font-size: 14px;
+}
+
+/* Reduce font size for form inputs, dropdowns, and options */
+#addRecordModal select,
+#addRecordModal option,
+#addRecordModal input,
+#addRecordModal textarea,
+#editRecordModal select,
+#editRecordModal option,
+#editRecordModal input,
+#editRecordModal textarea {
+  font-size: 14px;
+}
+
+/* Reduce font size for buttons */
+#addRecordModal .btn,
+#editRecordModal .btn {
+  font-size: 15px;
+}

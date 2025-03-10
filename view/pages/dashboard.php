@@ -93,7 +93,7 @@
             </div> -->
 
             <div class="card-body">
-              <h5 class="card-title">Total Expenses <span>| All Time</span></h5>
+              <h5 class="card-title">Total Expenses <span>| This Month</span></h5>
 
               <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -101,7 +101,12 @@
                 </div>
                 <div class="ps-3">
                   <h6 class="text-danger">₱ <?php echo number_format($totalExpense, 2); ?></h6>
-                  <span class="text-danger small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                  <span class="text-danger small pt-1 fw-bold">
+                    <?php echo ($percentageIncrease >= 0 ? '+' : '') . number_format($percentageIncrease, 2) . '%'; ?>
+                  </span>
+                  <span class="text-muted small pt-2 ps-1">
+                    <?php echo ($percentageIncrease >= 0) ? 'increase' : 'decrease'; ?>
+                  </span>
                 </div>
               </div>
             </div>
@@ -124,7 +129,7 @@
               </ul>
             </div> -->
             <div class="card-body">
-              <h5 class="card-title">Total Income <span>| All Time</span></h5>
+              <h5 class="card-title">Total Income <span>|This Month</span></h5>
 
               <div class="d-flex align-items-center">
                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -132,9 +137,14 @@
                 </div>
                 <div class="ps-3">
                   <h6 class="text-success">₱ <?php echo number_format($totalIncome, 2); ?></h6>
-                  <span class="text-success small pt-1 fw-bold">16%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
+                  <span class="text-success small pt-1 fw-bold">
+                    <?php echo ($incomePercentageIncrease >= 0 ? '+' : '') . number_format($incomePercentageIncrease, 2) . '%'; ?>
+                  </span>
+                  <span class="text-muted small pt-2 ps-1">
+                    <?php echo ($incomePercentageIncrease >= 0) ? 'increase' : 'decrease'; ?>
+                  </span>
                 </div>
+
               </div>
             </div>
           </div>
@@ -153,7 +163,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="addRecordModalLabel">New Record</h5>
+              <h6 class="modal-title" id="addRecordModalLabel">New Record</h6>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -162,31 +172,90 @@
                   <!-- Amount -->
                   <div class="col-md-4">
                     <label for="inputNumber" class="form-label">Amount</label>
-                    <input type="number" class="form-control" name="amount" id="inputNumber" required>
+                    <input type="number" class="form-control" name="amount" id="inputNumber" min="0" required>
                   </div>
 
                   <!-- Category -->
                   <div class="col-md-4">
                     <label class="form-label">Category</label>
-                    <select class="form-select" name="category" aria-label="Default select example">
-                      <optgroup label="Daily Expenses">
-                        <option value="Food and Drinks">Food and Drinks</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="House Rent">House Rent</option>
-                        <option value="Transportation">Transportation</option>
-                      </optgroup>
-                      <optgroup label="Assets">
-                        <option value="Vehicle">Vehicle</option>
-                        <option value="Life and Entertainment">Life and Entertainment</option>
-                        <option value="Communication & PC">Communication & PC</option>
-                      </optgroup>
-                      <optgroup label="Financial">
-                        <option value="Financial Expenses">Financial Expenses</option>
-                        <option value="Investments">Investments</option>
-                        <option value="Income">Income</option>
-                        <option value="Others">Others</option>
-                      </optgroup>
-                    </select>
+                    <div style="border: 1px solid #ced4da; border-radius: 0.375rem;">
+                      <select class="form-select" name="category" id="editCategory" aria-label="Default select example"
+                        style="width: 100%; border: none; max-height: 200px; overflow-y: auto;">
+                        <!-- Daily Expenses -->
+                        <optgroup label="Daily Expenses">
+                          <option disabled>────────────</option>
+                          <option value="Food and Drinks">Food and Drinks</option>
+                          <option value="Shopping">Shopping</option>
+                          <option value="House Rent">House Rent</option>
+                          <option value="Transportation">Transportation</option>
+                          <option value="Health & Medical">Health & Medical</option>
+                          <option value="Education">Education</option>
+                          <option value="Utilities">Utilities</option>
+                          <option value="Personal Care">Personal Care</option>
+                          <option value="Entertainment">Entertainment</option>
+                          <option value="Dining Out">Dining Out</option>
+                          <option value="Travel">Travel</option>
+                          <option value="Clothing & Accessories">Clothing & Accessories</option>
+                          <option value="Childcare">Childcare</option>
+                          <option value="Pet Care">Pet Care</option>
+                          <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                        </optgroup>
+                        <!-- Assets -->
+                        <optgroup label="Assets">
+                          <option value="Vehicle">Vehicle</option>
+                          <option value="Life and Entertainment">Life and Entertainment</option>
+                          <option value="Communication & PC">Communication & PC</option>
+                          <option value="Home">Home</option>
+                          <option value="Furniture & Appliances">Furniture & Appliances</option>
+                          <option value="Electronics">Electronics</option>
+                          <option value="Jewelry & Luxury Items">Jewelry & Luxury Items</option>
+                          <option value="Art & Collectibles">Art & Collectibles</option>
+                          <option value="Real Estate">Real Estate</option>
+                          <option value="Vehicles & Boats">Vehicles & Boats</option>
+                        </optgroup>
+                        <!-- Financial -->
+                        <optgroup label="Financial">
+                          <option value="Financial Expenses">Financial Expenses</option>
+                          <option value="Investments">Investments</option>
+                          <option value="Income">Income</option>
+                          <option value="Savings">Savings</option>
+                          <option value="Debt Payments">Debt Payments</option>
+                          <option value="Taxes">Taxes</option>
+                          <option value="Insurance">Insurance</option>
+                          <option value="Gifts & Donations">Gifts & Donations</option>
+                          <option value="Loan Payments">Loan Payments</option>
+                          <option value="Bank Fees">Bank Fees</option>
+                          <option value="Retirement Contributions">Retirement Contributions</option>
+                          <option value="Dividends">Dividends</option>
+                          <option value="Royalties">Royalties</option>
+                          <option value="Other Income">Other Income</option>
+                          <option value="Other Expenses">Other Expenses</option>
+                        </optgroup>
+                        <!-- Business & Professional -->
+                        <optgroup label="Business & Professional">
+                          <option value="Business Expenses">Business Expenses</option>
+                          <option value="Business Income">Business Income</option>
+                          <option value="Professional Services">Professional Services</option>
+                          <option value="Office Supplies">Office Supplies</option>
+                          <option value="Marketing & Advertising">Marketing & Advertising</option>
+                          <option value="Software & Subscriptions">Software & Subscriptions</option>
+                          <option value="Legal Fees">Legal Fees</option>
+                          <option value="Consulting Fees">Consulting Fees</option>
+                        </optgroup>
+                        <!-- Leisure & Lifestyle -->
+                        <optgroup label="Leisure & Lifestyle">
+                          <option value="Hobbies & Crafts">Hobbies & Crafts</option>
+                          <option value="Sports & Recreation">Sports & Recreation</option>
+                          <option value="Books & Magazines">Books & Magazines</option>
+                          <option value="Music & Instruments">Music & Instruments</option>
+                          <option value="Movies & Streaming">Movies & Streaming</option>
+                          <option value="Concerts & Events">Concerts & Events</option>
+                          <option value="Video Games">Video Games</option>
+                          <option value="Outdoor Activities">Outdoor Activities</option>
+                          <option value="Others">Others</option>
+                        </optgroup>
+                      </select>
+                    </div>
                   </div>
 
                   <!-- Transaction -->
@@ -225,7 +294,7 @@
 
                 <div class="text-end">
                   <button type="submit" name="add_record" class="btn btn-success">
-                    <i class="bi bi-check-lg"></i> OK
+                    <i class="bi bi-plus-lg"></i> Add
                   </button>
                 </div>
               </form>
@@ -235,16 +304,12 @@
       </div>
       <!-- end of add new record modal -->
 
-
-
-      <!-- Update Edit Transaction Modal -->
-      <!-- Modal -->
       <!-- Edit Record Modal -->
       <div class="modal fade" id="editRecordModal" tabindex="-1" aria-labelledby="editRecordModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="editRecordModalLabel">Edit Record</h5>
+              <h6 class="modal-title" id="editRecordModalLabel">Edit Record</h6>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -259,29 +324,88 @@
                     <input type="number" class="form-control" name="amount" id="editInputNumber" min="0" required>
                   </div>
 
-                  <!-- Category -->
                   <div class="col-md-4">
                     <label class="form-label">Category</label>
-                    <select class="form-select" name="category" id="editCategory" aria-label="Default select example">
-                      <optgroup label="Daily Expenses">
-                        <option value="Food and Drinks">Food and Drinks</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="House Rent">House Rent</option>
-                        <option value="Transportation">Transportation</option>
-                      </optgroup>
-                      <optgroup label="Assets">
-                        <option value="Vehicle">Vehicle</option>
-                        <option value="Life and Entertainment">Life and Entertainment</option>
-                        <option value="Communication & PC">Communication & PC</option>
-                      </optgroup>
-                      <optgroup label="Financial">
-                        <option value="Financial Expenses">Financial Expenses</option>
-                        <option value="Investments">Investments</option>
-                        <option value="Income">Income</option>
-                        <option value="Others">Others</option>
-                      </optgroup>
-                    </select>
+                    <div style="border: 1px solid #ced4da; border-radius: 0.375rem;">
+                      <select class="form-select" name="category" id="editCategory" aria-label="Default select example"
+                        style="width: 100%; border: none; max-height: 200px; overflow-y: auto;">
+                        <!-- Daily Expenses -->
+                        <optgroup label="Daily Expenses">
+                          <option value="Food and Drinks">Food and Drinks</option>
+                          <option value="Shopping">Shopping</option>
+                          <option value="House Rent">House Rent</option>
+                          <option value="Transportation">Transportation</option>
+                          <option value="Health & Medical">Health & Medical</option>
+                          <option value="Education">Education</option>
+                          <option value="Utilities">Utilities</option>
+                          <option value="Personal Care">Personal Care</option>
+                          <option value="Entertainment">Entertainment</option>
+                          <option value="Dining Out">Dining Out</option>
+                          <option value="Travel">Travel</option>
+                          <option value="Clothing & Accessories">Clothing & Accessories</option>
+                          <option value="Childcare">Childcare</option>
+                          <option value="Pet Care">Pet Care</option>
+                          <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                        </optgroup>
+                        <!-- Assets -->
+                        <optgroup label="Assets">
+                          <option value="Vehicle">Vehicle</option>
+                          <option value="Life and Entertainment">Life and Entertainment</option>
+                          <option value="Communication & PC">Communication & PC</option>
+                          <option value="Home">Home</option>
+                          <option value="Furniture & Appliances">Furniture & Appliances</option>
+                          <option value="Electronics">Electronics</option>
+                          <option value="Jewelry & Luxury Items">Jewelry & Luxury Items</option>
+                          <option value="Art & Collectibles">Art & Collectibles</option>
+                          <option value="Real Estate">Real Estate</option>
+                          <option value="Vehicles & Boats">Vehicles & Boats</option>
+                        </optgroup>
+                        <!-- Financial -->
+                        <optgroup label="Financial">
+                          <option value="Financial Expenses">Financial Expenses</option>
+                          <option value="Investments">Investments</option>
+                          <option value="Income">Income</option>
+                          <option value="Savings">Savings</option>
+                          <option value="Debt Payments">Debt Payments</option>
+                          <option value="Taxes">Taxes</option>
+                          <option value="Insurance">Insurance</option>
+                          <option value="Gifts & Donations">Gifts & Donations</option>
+                          <option value="Loan Payments">Loan Payments</option>
+                          <option value="Bank Fees">Bank Fees</option>
+                          <option value="Retirement Contributions">Retirement Contributions</option>
+                          <option value="Dividends">Dividends</option>
+                          <option value="Royalties">Royalties</option>
+                          <option value="Other Income">Other Income</option>
+                          <option value="Other Expenses">Other Expenses</option>
+                        </optgroup>
+                        <!-- Business & Professional -->
+                        <optgroup label="Business & Professional">
+                          <option value="Business Expenses">Business Expenses</option>
+                          <option value="Business Income">Business Income</option>
+                          <option value="Professional Services">Professional Services</option>
+                          <option value="Office Supplies">Office Supplies</option>
+                          <option value="Marketing & Advertising">Marketing & Advertising</option>
+                          <option value="Software & Subscriptions">Software & Subscriptions</option>
+                          <option value="Legal Fees">Legal Fees</option>
+                          <option value="Consulting Fees">Consulting Fees</option>
+                        </optgroup>
+                        <!-- Leisure & Lifestyle -->
+                        <optgroup label="Leisure & Lifestyle">
+                          <option value="Hobbies & Crafts">Hobbies & Crafts</option>
+                          <option value="Sports & Recreation">Sports & Recreation</option>
+                          <option value="Books & Magazines">Books & Magazines</option>
+                          <option value="Music & Instruments">Music & Instruments</option>
+                          <option value="Movies & Streaming">Movies & Streaming</option>
+                          <option value="Concerts & Events">Concerts & Events</option>
+                          <option value="Video Games">Video Games</option>
+                          <option value="Outdoor Activities">Outdoor Activities</option>
+                          <option value="Others">Others</option>
+                        </optgroup>
+                      </select>
+                    </div>
                   </div>
+
+
 
                   <!-- Transaction -->
                   <div class="col-md-4">
@@ -334,7 +458,6 @@
           </div>
         </div>
       </div>
-
       <!-- End of Edit Record Modal -->
 
 
@@ -567,7 +690,7 @@
         </div> -->
 
         <div class="card-body pb-0">
-          <h5 class="card-title">Expense Structure </h5>
+          <h5 class="card-title">Expense Structure <span>| All Time</span> </h5>
           <div id="trafficChart" style="height: 50vh; width: 100%;" class="echart"></div>
           <script>
             // Fetch data from PHP
@@ -618,7 +741,7 @@
           </script>
           <div class="text-center mb-3">
             <h6 class="total-expenses">
-              Total Expenses: ₱ <?php echo number_format($totalExpense, 2); ?>
+              Total Expenses: ₱ <?php echo number_format($allTimeExpense, 2); ?>
             </h6>
           </div>
 

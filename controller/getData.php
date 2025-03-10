@@ -80,49 +80,88 @@ if ($stmt2) {
 
 
 /** Expenses **/
-$sql3 = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'expense'";
+
+/** All-Time Expenses **/
+$sqlAllTimeExpense = "SELECT SUM(amount) AS total 
+                      FROM transactions 
+                      WHERE userid = ? 
+                      AND transaction = 'expense'";
+$stmtAllTimeExpense = $conn->prepare($sqlAllTimeExpense);
+if ($stmtAllTimeExpense) {
+  $stmtAllTimeExpense->bind_param("i", $userid);
+  if ($stmtAllTimeExpense->execute()) {
+    $allTimeExpenseResult = $stmtAllTimeExpense->get_result();
+    $allTimeExpense = $allTimeExpenseResult->fetch_assoc()['total'] ?? 0;
+  }
+  $stmtAllTimeExpense->close();
+}
+
+
+/** Current Month Expenses **/
+$sql3 = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'expense' AND MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE()) ";
 $stmt3 = $conn->prepare($sql3);
 if ($stmt3) {
   $stmt3->bind_param("i", $userid);
   if ($stmt3->execute()) {
     $expenseResult = $stmt3->get_result();
     $totalExpense = $expenseResult->fetch_assoc()['total'] ?? 0;
-
-    // $_SESSION['message'] = "Total expense fetched successfully! ₱" . number_format($totalExpense, 2);
-    // $_SESSION['code'] = "success";
-  } else {
-    $_SESSION['message'] = "Failed to fetch total expenses!";
-    $_SESSION['code'] = "error";
   }
   $stmt3->close();
-} else {
-  $_SESSION['message'] = "Error preparing statement for expenses!";
-  $_SESSION['code'] = "error";
 }
+
+/** Previous Period's Expenses (e.g., Last Month) **/
+$sqlPrev = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'expense' AND MONTH(date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
+$stmtPrev = $conn->prepare($sqlPrev);
+if ($stmtPrev) {
+  $stmtPrev->bind_param("i", $userid);
+  if ($stmtPrev->execute()) {
+    $prevExpenseResult = $stmtPrev->get_result();
+    $prevExpense = $prevExpenseResult->fetch_assoc()['total'] ?? 0;
+  }
+  $stmtPrev->close();
+}
+
+/** Calculate Percentage Increase **/
+$percentageIncrease = 0;
+if ($prevExpense > 0) {
+  $percentageIncrease = (($totalExpense - $prevExpense) / $prevExpense) * 100;
+}
+
 /** END OF Expenses **/
 
 
 
 /** Income **/
-$sql4 = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'income'";
+/** Current Income **/
+$sql4 = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'income' AND MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE())";
 $stmt4 = $conn->prepare($sql4);
 if ($stmt4) {
   $stmt4->bind_param("i", $userid);
   if ($stmt4->execute()) {
     $incomeResult = $stmt4->get_result();
     $totalIncome = $incomeResult->fetch_assoc()['total'] ?? 0;
-
-    // $_SESSION['message'] = "Total income fetched successfully! ₱" . number_format($totalIncome, 2);
-    // $_SESSION['code'] = "success";
-  } else {
-    $_SESSION['message'] = "Failed to fetch total income!";
-    $_SESSION['code'] = "error";
   }
   $stmt4->close();
-} else {
-  $_SESSION['message'] = "Error preparing statement for income!";
-  $_SESSION['code'] = "error";
 }
+
+/** Previous Period's Income (e.g., Last Month) **/
+$sqlPrevIncome = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'income' AND MONTH(date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
+$stmtPrevIncome = $conn->prepare($sqlPrevIncome);
+if ($stmtPrevIncome) {
+  $stmtPrevIncome->bind_param("i", $userid);
+  if ($stmtPrevIncome->execute()) {
+    $prevIncomeResult = $stmtPrevIncome->get_result();
+    $prevIncome = $prevIncomeResult->fetch_assoc()['total'] ?? 0;
+  }
+  $stmtPrevIncome->close();
+}
+
+/** Calculate Percentage Increase for Income **/
+$incomePercentageIncrease = 0;
+if ($prevIncome > 0) {
+  $incomePercentageIncrease = (($totalIncome - $prevIncome) / $prevIncome) * 100;
+}
+
 /** END OF Income **/
 
 
