@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_record'])) {
     setSessionMessage("All fields are required!", "error", "../view/pages/add.php");
   }
 
-  // ✅ Automatically format amount based on transaction type
-  $amount = ($transaction === 'expense') ? -abs($amount) : abs($amount);
+  // ✅ Automatically sets the amount to positive
+  $amount = abs($amount);
 
   // ✅ Combine date and time into a single DATETIME value
   if (!empty($date) && !empty($time)) {

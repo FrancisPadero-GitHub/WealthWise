@@ -36,9 +36,28 @@
                 </div>
                 <div class="ps-3">
                   <h6 id="currentBalance">₱ <?php echo number_format($balance, 2); ?></h6>
-                  <span class="text-success small pt-1 fw-bold">12%</span>
-                  <span class="text-muted small pt-2 ps-1">increase</span>
+                  <span id="balanceStatus" class="text-success small pt-1 fw-bold">Debt Free</span>
                 </div>
+                <!-- if the balance go under 0 places another text -->
+                <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    // Get balance value from the HTML
+                    const balance = parseFloat(
+                      document.getElementById("currentBalance").innerText.replace(/[₱,]/g, "")
+                    );
+
+                    const balanceStatus = document.getElementById("balanceStatus");
+                    const statusText = document.getElementById("statusText");
+
+                    if (balance < 0) {
+                      balanceStatus.classList.remove("text-success");
+                      balanceStatus.classList.add("text-danger"); // Change color to red if negative
+                      balanceStatus.innerText = "You are now in debt";
+                      statusText.style.display = "none"; // Hide the 'increase' text
+                    }
+                  });
+                </script>
+
               </div>
             </div>
           </div>
@@ -252,7 +271,7 @@
                   <!-- Amount -->
                   <div class="col-md-4">
                     <label for="editInputNumber" class="form-label">Amount</label>
-                    <input type="number" class="form-control" name="amount" id="editInputNumber" required>
+                    <input type="number" class="form-control" name="amount" id="editInputNumber" min="0" required>
                   </div>
 
                   <!-- Category -->
@@ -395,7 +414,7 @@
                         <td><?php echo htmlspecialchars($row['category']); ?></td>
                         <td><?php echo htmlspecialchars($row['description']); ?></td>
                         <td>
-                          <span style="color: <?php echo $row['amount'] < 0 ? 'red' : 'green'; ?>; font-weight: bold; ">
+                          <span class="<?php echo $row['transaction'] === 'expense' ? 'text-danger' : 'text-success'; ?> fw-bold">
                             <?php echo number_format($row['amount'], 2); ?>
                           </span>
                         </td>
