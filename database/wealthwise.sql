@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2025 at 11:54 AM
+-- Generation Time: Mar 12, 2025 at 08:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,8 +41,9 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`userid`, `first_name`, `last_name`, `balance`, `email`, `password`) VALUES
-(1, 'Francis', 'Padero', 1246.00, 'francispadero2001@gmail.com', '$2y$10$p3iXH/RI5DX01xKJQV3Og.sMVM.XI9.4NmjZMvPzQCjSEal.NctXS'),
-(2, 'Cindy Claire', 'Booc', 320.00, 'cindyclairebooc@gmail.com', '$2y$10$nfKWUS05aBXh.9Ev/mHM1.U4RTCNyYHh.ne1.K7UKRHo2Eym0vYSm');
+(1, 'Francis', 'Padero', 1.00, 'francispadero2001@gmail.com', '$2y$10$p3iXH/RI5DX01xKJQV3Og.sMVM.XI9.4NmjZMvPzQCjSEal.NctXS'),
+(2, 'Cindy Claire', 'Booc', 0.00, 'cindyclairebooc@gmail.com', '$2y$10$nfKWUS05aBXh.9Ev/mHM1.U4RTCNyYHh.ne1.K7UKRHo2Eym0vYSm'),
+(3, 'Francis', 'Padero', 0.00, 'frankpadero2025@gmail.com', '$2y$10$FWSJRQQAeF8umsmdXwqFGeuMrrHeYMpB2mW6UsZwofWu5ZM4wUhrq');
 
 -- --------------------------------------------------------
 
@@ -66,41 +67,29 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`transaction_id`, `userid`, `category`, `description`, `amount`, `date`, `payment_type`, `transaction`) VALUES
-(2, 1, 'Transport', 'Uber ride', -20.00, '2025-03-11 14:23:52', 'credit', 'expense'),
-(3, 1, 'Salary', 'Monthly salary credited', 2500.00, '2025-03-12 14:23:52', 'cash', 'income'),
-(4, 1, 'Entertainment', 'Netflix subscription', -15.00, '2025-03-13 14:23:52', 'credit', 'expense'),
-(5, 1, 'Utilities', 'Electric bill payment', -100.00, '2025-03-14 14:23:52', 'credit', 'expense'),
-(6, 1, 'Food', 'Dinner at a restaurant', -60.00, '2025-03-15 14:23:52', 'cash', 'expense'),
-(7, 1, 'Shopping', 'New shoes', -120.00, '2025-03-16 14:23:52', 'credit', 'expense'),
-(8, 1, 'Investment', 'Stocks purchase', -500.00, '2025-03-17 14:23:52', 'credit', 'expense'),
-(9, 1, 'Health', 'Doctor consultation', -80.00, '2025-03-18 14:23:52', 'credit', 'expense'),
-(10, 1, 'Rent', 'Monthly house rent', -1000.00, '2025-03-19 14:23:52', 'cash', 'expense'),
-(11, 1, 'Groceries', 'Grocery shopping', -75.00, '2026-03-10 14:23:52', 'credit', 'expense'),
-(12, 1, 'Entertainment', 'Movie tickets', -30.00, '2027-03-10 14:23:52', 'credit', 'expense'),
-(13, 1, 'Utilities', 'Internet bill', -45.00, '2028-03-10 14:23:52', 'credit', 'expense'),
-(14, 1, 'Food', 'Lunch with friends', -40.00, '2029-03-10 14:23:52', 'cash', 'expense'),
-(15, 1, 'Investment', 'Crypto purchase', -300.00, '2030-03-10 14:23:52', 'credit', 'expense'),
-(16, 1, 'Health', 'Gym membership', -60.00, '2031-03-10 14:23:52', 'credit', 'expense'),
-(17, 1, 'Salary', 'Freelance work', 1500.00, '2032-03-10 14:23:52', 'cash', 'income'),
-(18, 1, 'Shopping', 'Clothing purchase', -80.00, '2033-03-10 14:23:52', 'credit', 'expense'),
-(19, 1, 'Transport', 'Gas refill', -50.00, '2034-03-10 14:23:52', 'cash', 'expense'),
-(20, 1, 'Education', 'Online course payment', -200.00, '2035-03-10 14:23:52', 'credit', 'expense'),
-(21, 2, 'Food and Drinks', 'Cake', -50.00, '2025-03-10 07:37:18', 'cash', 'expense'),
-(22, 2, 'Transportation', 'Plete', -80.00, '2025-03-11 00:00:00', 'cash', 'expense'),
-(23, 2, 'Income', 'Balon', 100.00, '2025-03-11 00:00:00', 'cash', 'income'),
-(24, 2, 'Income', 'Commission', 250.00, '2025-03-12 00:00:00', 'cash', 'income'),
-(25, 2, 'Investments', 'ROI', 600.00, '2025-03-13 00:00:00', 'cash', 'income'),
-(26, 2, 'Shopping', 'Wattsons', -500.00, '2025-03-14 00:00:00', 'cash', 'expense');
+(25, 1, 'Food and Drinks', 'Income Last Month', 100.00, '2025-02-10 00:00:00', 'cash', 'income'),
+(26, 1, 'Food and Drinks', 'Income this month', 20.00, '2025-03-10 00:00:00', 'cash', 'income'),
+(27, 1, 'Food and Drinks', '', 100.00, '2025-03-10 00:00:00', 'cash', 'income'),
+(28, 1, 'Food and Drinks', '', 100.00, '2025-02-10 00:00:00', 'cash', 'expense'),
+(29, 1, 'Food and Drinks', '', 20.00, '2025-03-10 00:00:00', 'cash', 'expense'),
+(30, 1, 'Food and Drinks', '', 100.00, '2025-03-10 00:00:00', 'cash', 'expense');
 
 --
 -- Triggers `transactions`
 --
 DELIMITER $$
 CREATE TRIGGER `update_balance_after_transaction` AFTER INSERT ON `transactions` FOR EACH ROW BEGIN
-    -- Directly add the amount (positive for income, negative for expense)
-    UPDATE accounts
-    SET balance = balance + NEW.amount
-    WHERE userid = NEW.userid;
+    IF NEW.transaction = 'income' THEN
+        -- Add amount for income
+        UPDATE accounts
+        SET balance = balance + NEW.amount
+        WHERE userid = NEW.userid;
+    ELSEIF NEW.transaction = 'expense' THEN
+        -- Subtract amount for expense
+        UPDATE accounts
+        SET balance = balance - NEW.amount
+        WHERE userid = NEW.userid;
+    END IF;
 END
 $$
 DELIMITER ;
@@ -131,13 +120,13 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables

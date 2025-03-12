@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_record'])) {
 
   // ✅ Validate required fields
   if (empty($category) || empty($transaction) || empty($account)) {
-    setSessionMessage("All fields are required!", "error", "../view/pages/add.php");
+    setSessionMessage("All fields are required!", "error");
   }
 
   // ✅ Automatically sets the amount to positive
@@ -53,22 +53,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_record'])) {
     $stmt->bind_param("idsssss", $userid, $amount, $category, $transaction, $datetime, $account, $description);
 
     if ($stmt->execute()) {
-      setSessionMessage("Record added successfully!", "success", "../view/index.php");
+      header("Location: ../view/index.php");
+      setSessionMessage("Record added successfully!", "success",);
     } else {
-      setSessionMessage("Database error: " . $stmt->error, "error", "../view/pages/add.php");
+      setSessionMessage("Database error: " . $stmt->error, "error",);
     }
   } else {
-    setSessionMessage("Error preparing statement!", "error", "../view/pages/add.php");
+    setSessionMessage("Error preparing statement!", "error",);
   }
 }
 
 $conn->close();
 
 // ✅ Helper function for setting session messages and redirecting
-function setSessionMessage($message, $code, $redirect)
+function setSessionMessage($message, $code)
 {
   $_SESSION['message'] = $message;
   $_SESSION['code'] = $code;
-  header("Location: $redirect");
   exit();
 }
