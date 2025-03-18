@@ -151,12 +151,30 @@
         </div><!-- End Income Card -->
       </div><!-- End cards -->
 
+
+
+
+
       <!--Add Transaction -->
-      <div class="text-end">
+      <div class="d-flex justify-content-between">
+        <form action="../controller/test.php" method="POST">
+          <button type="submit" name="dummy_data" class="btn btn-secondary" title="Generate dummy data for testing">
+            <i class="bi bi-box-seam"></i> Generate
+          </button>
+        </form>
+
+        <!-- <button type="submit" name="reset_data" class="btn btn-danger" title="Reset all data">
+          <i class="bi bi-arrow-counterclockwise"></i> Reset Data
+        </button> -->
+
         <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRecordModal">
-          <i class="bi bi-plus-lg"></i> <!-- Bootstrap Plus Icon -->
+          <i class="bi bi-plus-lg"></i>
         </a>
       </div>
+
+
+
+
 
       <!-- Add new record modal -->
       <div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">

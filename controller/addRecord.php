@@ -1,17 +1,6 @@
 <?php
 session_start();
 include("../database/config.php");
-
-header('Content-Type: application/json'); // Ensure JSON output
-
-// ✅ Check if user is logged in
-if (!isset($_SESSION['authUser']['userid'])) {
-  $_SESSION['message'] = "User not authenticated!";
-  $_SESSION['code'] = "error";
-  header("Location: ../view/pages/login.php");
-  exit();
-}
-
 $userid = intval($_SESSION['authUser']['userid']);
 
 // ✅ Handle adding new record (POST)
@@ -23,14 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_record'])) {
   $time = trim($_POST['time'] ?? '');
   $account = trim($_POST['account'] ?? '');
   $description = trim($_POST['description'] ?? '');
-
-  // ✅ Validate required fields
-  if (empty($category) || empty($transaction) || empty($account)) {
-    setSessionMessage("All fields are required!", "error");
-  }
-
-  // ✅ Automatically sets the amount to positive
-  $amount = abs($amount);
 
   // ✅ Combine date and time into a single DATETIME value
   if (!empty($date) && !empty($time)) {
@@ -50,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_record'])) {
 
   if ($stmt) {
     // ✅ Bind parameters to prevent SQL injection
-    $stmt->bind_param("idsssss", $userid, $amount, $category, $transaction, $datetime, $account, $description);
+    $stmt->bind_param("idsssss", $userid, abs($amount), $category, $transaction, $datetime, $account, $description);
 
     if ($stmt->execute()) {
       header("Location: ../view/index.php");
