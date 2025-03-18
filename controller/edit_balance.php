@@ -2,13 +2,7 @@
 session_start();
 include("../database/config.php");
 
-// Check if user is logged in
-if (isset($_SESSION['authUser']['userid'])) {
-  $userid = intval($_SESSION['authUser']['userid']);
-} else {
-  $_SESSION['message'] = "UserID didn't initialize!";
-  $_SESSION['code'] = "error";
-}
+$userid = intval($_SESSION['authUser']['userid']);
 
 if (isset($_POST['edit_balance'])) {
   $balance = floatval($_POST['balance'] ?? 0);

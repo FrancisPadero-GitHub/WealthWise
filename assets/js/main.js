@@ -407,7 +407,6 @@
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              console.log("Record updated successfully");
               location.reload(); // Reload table to reflect changes
             } else {
               console.error("Failed to update record:", data.error);
@@ -471,25 +470,20 @@
     const balanceStatus = document.getElementById("balanceStatus");
     const statusText = document.getElementById("statusText");
 
-   if (balance < 0) {
-     balanceStatus.classList.remove("text-success", "text-warning");
-     balanceStatus.classList.add("text-danger"); // Change color to red if negative
-     balanceStatus.innerText = "You are now in debt";
-
-   } else if (balance === 0) {
-     balanceStatus.classList.remove("text-success", "text-danger");
-     balanceStatus.classList.add("text-warning"); // Change color to orange if zero
-     balanceStatus.innerText = "Broke as fuck";
-
-   } else {
-     balanceStatus.classList.remove("text-danger", "text-warning");
-     balanceStatus.classList.add("text-success"); // Change color to green if positive
-     balanceStatus.innerText = "Debt free sheesh";
-
-   }
-
+    if (balance < 0) {
+      balanceStatus.classList.remove("text-success", "text-warning");
+      balanceStatus.classList.add("text-danger"); // Change color to red if negative
+      balanceStatus.innerText = "You are now in debt";
+    } else if (balance === 0) {
+      balanceStatus.classList.remove("text-success", "text-danger");
+      balanceStatus.classList.add("text-warning"); // Change color to orange if zero
+      balanceStatus.innerText = "Broke as fuck";
+    } else {
+      balanceStatus.classList.remove("text-danger", "text-warning");
+      balanceStatus.classList.add("text-success"); // Change color to green if positive
+      balanceStatus.innerText = "Debt free sheesh";
+    }
   });
 
-
-  // 
+ 
 })();
