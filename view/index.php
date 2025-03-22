@@ -1,3 +1,8 @@
+<?php
+// Start session at the top
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,8 +37,6 @@
 <body>
 
   <?php
-  // Start session at the top
-  session_start();
 
   // Include essential files
   include("../database/config.php");

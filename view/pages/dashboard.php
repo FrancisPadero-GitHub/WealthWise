@@ -10,11 +10,36 @@
 <section class="section dashboard">
   <div class="row">
     <!-- Left side columns -->
-    <div class="col-lg-7">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 col-xxl-7">
       <div class="row" style="margin-bottom: 0;">
+        <!-- Balance Modal Card -->
+        <div class="modal fade" id="editBalanceModal" tabindex="-1" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+              <form id="editBalanceForm" action="../controller/edit_balance.php" method="POST">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editBalanceModalLabel">Edit Balance</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="balanceAmount" class="form-label">New Balance Amount</label>
+                    <input type="number" class="form-control" id="balanceAmount" name="balance" step="0.01" value="<?php echo isset($balance) ? htmlspecialchars($balance) : '0.00'; ?>" required>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" name="edit_balance" class="btn btn-primary">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- End of Modal Card -->
 
         <!-- Balance Card -->
-        <div class="col-xxl-4 col-md-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-4">
           <div class="card info-card balance-card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -49,34 +74,8 @@
         </div>
         <!-- End Balance Card -->
 
-        <!-- Balance Modal Card -->
-        <div class="modal fade" id="editBalanceModal" tabindex="-1" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-
-              <form id="editBalanceForm" action="../controller/edit_balance.php" method="POST">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="editBalanceModalLabel">Edit Balance</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="mb-3">
-                    <label for="balanceAmount" class="form-label">New Balance Amount</label>
-                    <input type="number" class="form-control" id="balanceAmount" name="balance" step="0.01" value="<?php echo isset($balance) ? htmlspecialchars($balance) : '0.00'; ?>" required>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" name="edit_balance" class="btn btn-primary">Save Changes</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <!-- End of Modal Card -->
-
         <!-- Total Expenses Card -->
-        <div class="col-xxl-4 col-md-6">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-4">
           <div class="card info-card expense-card">
 
             <!-- <div class="filter">
@@ -114,7 +113,7 @@
         </div><!-- End Total Expenses Card -->
 
         <!-- Total Income Card -->
-        <div class="col-xxl-4 col-xl-12">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-4">
           <div class="card info-card income-card">
             <!-- <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -691,7 +690,7 @@
     </div> <!-- End Left side columns -->
 
     <!-- Right side columns -->
-    <div class="col-lg-5">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5">
 
       <!-- Money Traffic -->
       <div class="card">
