@@ -729,7 +729,7 @@
                   series: [{
                     name: "Access from",
                     type: 'pie',
-                    radius: ['25%', '65%'],
+                    radius: ['33%', '65%'],
                     center: ['50%', '60%'],
                     avoidLabelOverlap: false,
                     label: {

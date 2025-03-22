@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2025 at 08:06 AM
+-- Generation Time: Mar 22, 2025 at 05:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,9 +41,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`userid`, `first_name`, `last_name`, `balance`, `email`, `password`) VALUES
-(1, 'Francis', 'Padero', 1.00, 'francispadero2001@gmail.com', '$2y$10$p3iXH/RI5DX01xKJQV3Og.sMVM.XI9.4NmjZMvPzQCjSEal.NctXS'),
-(2, 'Cindy Claire', 'Booc', 0.00, 'cindyclairebooc@gmail.com', '$2y$10$nfKWUS05aBXh.9Ev/mHM1.U4RTCNyYHh.ne1.K7UKRHo2Eym0vYSm'),
-(3, 'Francis', 'Padero', 0.00, 'frankpadero2025@gmail.com', '$2y$10$FWSJRQQAeF8umsmdXwqFGeuMrrHeYMpB2mW6UsZwofWu5ZM4wUhrq');
+(4, 'Francis', 'Padero', 3092.50, 'francispadero2001@gmail.com', '$2y$10$vTNVjPZ5l6/iZ3/VeLSaM.eu1UCDtSBkbafLQyJwZB.WJph7vDUOC');
 
 -- --------------------------------------------------------
 
@@ -67,12 +65,31 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`transaction_id`, `userid`, `category`, `description`, `amount`, `date`, `payment_type`, `transaction`) VALUES
-(25, 1, 'Food and Drinks', 'Income Last Month', 100.00, '2025-02-10 00:00:00', 'cash', 'income'),
-(26, 1, 'Food and Drinks', 'Income this month', 20.00, '2025-03-10 00:00:00', 'cash', 'income'),
-(27, 1, 'Food and Drinks', '', 100.00, '2025-03-10 00:00:00', 'cash', 'income'),
-(28, 1, 'Food and Drinks', '', 100.00, '2025-02-10 00:00:00', 'cash', 'expense'),
-(29, 1, 'Food and Drinks', '', 20.00, '2025-03-10 00:00:00', 'cash', 'expense'),
-(30, 1, 'Food and Drinks', '', 100.00, '2025-03-10 00:00:00', 'cash', 'expense');
+(1, 4, 'Food and Drinks', 'Test', 60.00, '2025-03-22 00:00:00', 'cash', 'income'),
+(2, 4, 'Food and Drinks', 'Walmart shopping', 150.50, '2025-03-22 23:07:30', 'credit', 'expense'),
+(3, 4, 'Transportation', 'Uber ride', 20.00, '2025-03-23 23:07:30', 'credit', 'expense'),
+(4, 4, 'Income', 'Monthly salary credited', 2500.00, '2025-03-24 23:07:30', 'cash', 'income'),
+(5, 4, 'Life and Entertainment', 'Netflix subscription', 15.00, '2025-03-25 23:07:30', 'credit', 'expense'),
+(6, 4, 'Communication & PC', 'Electric bill payment', 100.00, '2025-03-26 23:07:30', 'credit', 'expense'),
+(7, 4, 'Food and Drinks', 'Dinner at a restaurant', 60.00, '2025-03-27 23:07:30', 'cash', 'expense'),
+(8, 4, 'Shopping', 'New shoes', 120.00, '2025-03-28 23:07:30', 'credit', 'expense'),
+(9, 4, 'Investments', 'Stocks purchase', 500.00, '2025-03-29 23:07:30', 'credit', 'expense'),
+(10, 4, 'Health', 'Doctor consultation', 80.00, '2025-03-30 23:07:30', 'credit', 'expense'),
+(11, 4, 'House Rent', 'Monthly house rent', 1000.00, '2025-03-31 23:07:30', 'cash', 'expense'),
+(12, 4, 'Food and Drinks', 'Walmart shopping', 100.00, '2025-02-22 23:07:30', 'credit', 'expense'),
+(13, 4, 'Transportation', 'Taxi ride', 30.00, '2025-02-22 23:07:30', 'cash', 'expense'),
+(14, 4, 'Income', 'Monthly salary', 2200.00, '2025-02-22 23:07:30', 'cash', 'income'),
+(15, 4, 'Life and Entertainment', 'Spotify subscription', 12.00, '2025-02-22 23:07:30', 'credit', 'expense'),
+(16, 4, 'Health', 'Medical checkup', 90.00, '2025-02-22 23:07:30', 'credit', 'expense'),
+(17, 4, 'Food and Drinks', 'Grocery shopping', 75.00, '2024-03-22 23:07:30', 'credit', 'expense'),
+(18, 4, 'Life and Entertainment', 'Movie tickets', 30.00, '2024-03-22 23:07:30', 'credit', 'expense'),
+(19, 4, 'Communication & PC', 'Internet bill', 45.00, '2024-03-22 23:07:30', 'credit', 'expense'),
+(20, 4, 'Income', 'Freelance work', 1500.00, '2024-03-22 23:07:30', 'cash', 'income'),
+(21, 4, 'Investments', 'Crypto purchase', 300.00, '2024-03-22 23:07:30', 'credit', 'expense'),
+(22, 4, 'Health', 'Gym membership', 60.00, '2026-03-22 23:07:30', 'credit', 'expense'),
+(23, 4, 'Shopping', 'Clothing purchase', 80.00, '2027-03-22 23:07:30', 'credit', 'expense'),
+(24, 4, 'Transportation', 'Gas refill', 50.00, '2028-03-22 23:07:30', 'cash', 'expense'),
+(25, 4, 'Others', 'Online course payment', 200.00, '2029-03-22 23:07:30', 'credit', 'expense');
 
 --
 -- Triggers `transactions`
@@ -120,13 +137,13 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables

@@ -46,19 +46,22 @@ include("../database/config.php");
   include("./includes/topbar.php");
   include("./includes/sidebar.php");
   ?>
-  <main id="main" class="main">
-    <?php
-    // Load the page dynamically based on URL
-    $page = $_GET['page'] ?? 'dashboard'; // Use null coalescing for cleaner syntax
-    $path = "./pages/$page.php";
 
-    if (file_exists($path)) {
-      include($path);
-    } else {
-      include('./pages/404.php'); // Fallback to 404 page
-    }
-    ?>
-  </main>
+  <div class="wrapper">
+    <main id="main" class="main">
+      <?php
+      // Load the page dynamically based on URL
+      $page = $_GET['page'] ?? 'dashboard'; // Use null coalescing for cleaner syntax
+      $path = "./pages/$page.php";
+      if (file_exists($path)) {
+        include($path);
+      } else {
+        include('./pages/404.php'); // Fallback to 404 page
+      }
+      ?>
+    </main>
+  </div>
+
 
   <?php include("./includes/footer.php"); ?>
 
