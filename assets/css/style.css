@@ -42,7 +42,7 @@ h6 {
 # Main
 --------------------------------------------------------------*/
 #main {
-  margin-top: 50px;
+  margin-top: 55px;
   padding: 20px 30px;
   transition: all 0.3s;
 }
@@ -1281,4 +1281,9 @@ h6 {
 #addRecordModal .btn,
 #editRecordModal .btn {
   font-size: 15px;
+}
+/* expense chart */
+.echart {
+  height: 50vh;
+  width: 100%;
 }

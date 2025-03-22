@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../database/config.php';
 // Authentication Simple and userID assigning for global use
 if (!isset($_SESSION['auth']) || !isset($_SESSION['authUser']['userid'])) {

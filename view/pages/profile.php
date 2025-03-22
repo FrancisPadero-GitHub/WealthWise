@@ -17,7 +17,7 @@
 
           <img src="../assets/img/wealthwise.png" alt="Profile">
           <h2><?= $firstName . ' ' . $lastName ?></h2>
-          <h3>Section: R10</h3>
+          <h3>Inter Prog & Tech 3R10</h3>
           <div class="social-links mt-2">
             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>

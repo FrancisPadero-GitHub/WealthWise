@@ -705,30 +705,32 @@
           </ul>
         </div> -->
 
-        <div class="card-body pb-0">
+        <div class="card-body pb-0" id="expense">
           <h5 class="card-title">Expense Structure <span>| All Time</span> </h5>
-          <div id="trafficChart" style="height: 50vh; width: 100%;" class="echart"></div>
+          <div id="trafficChart" class="echart"></div>
           <script>
             // Fetch data from PHP
             async function loadChartData() {
               try {
                 const response = await fetch('../controller/expenseChart.php');
                 const data = await response.json();
-                console.log(data)
+
                 // Initialize ECharts
                 const chart = echarts.init(document.querySelector("#trafficChart"));
+
                 chart.setOption({
                   tooltip: {
                     trigger: 'item'
                   },
                   legend: {
-                    top: '5%',
+                    top: '1%',
                     left: 'center'
                   },
                   series: [{
-                    name: 'Access From',
+                    name: "Access from",
                     type: 'pie',
-                    radius: ['40%', '70%'],
+                    radius: ['25%', '65%'],
+                    center: ['50%', '60%'],
                     avoidLabelOverlap: false,
                     label: {
                       show: false,
@@ -737,7 +739,7 @@
                     emphasis: {
                       label: {
                         show: true,
-                        fontSize: '18',
+                        fontSize: '12',
                         fontWeight: 'bold'
                       }
                     },
@@ -747,6 +749,7 @@
                     data: data
                   }]
                 });
+
               } catch (error) {
                 console.error('Error loading chart data:', error);
               }
