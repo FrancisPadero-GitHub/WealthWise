@@ -1,7 +1,6 @@
 <?php
 session_start();
-include("../database/config.php");
-
+require_once '../database/config.php';
 $userid = intval($_SESSION['authUser']['userid']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_pass'])) {
@@ -44,8 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_pass'])) {
   $stmt->bind_param("si", $newHashedPassword, $userid);
 
   if ($stmt->execute()) {
-    header("Location: ../view/index.php?page=profile");
-    setSessionMessage("Password changed successfully!", "success",);
+    // after changing password proceed to login again to test the new password
+    header("Location: ../view/login.php");
+    logout();
   } else {
     header("Location: ../view/index.php?page=profile");
     setSessionMessage("Something went wrong!", "error",);
@@ -61,4 +61,13 @@ function setSessionMessage($message, $code)
   $_SESSION['message'] = $message;
   $_SESSION['code'] = $code;
   exit();
+}
+
+function logout()
+{
+  session_unset(); // Clear all session data
+  session_destroy(); // Destroy the session
+  // Set the message for next login
+  session_start(); // Start a new session to store the message
+  setSessionMessage("Password changed successfully! Please log in again.", "success");
 }

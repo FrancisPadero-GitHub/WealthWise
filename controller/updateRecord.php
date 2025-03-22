@@ -1,7 +1,6 @@
 <?php
 session_start();
-include("../database/config.php");
-
+require_once '../database/config.php';
 header('Content-Type: application/json'); // Ensure JSON output
 
 $userid = intval($_SESSION['authUser']['userid']);
@@ -148,7 +147,7 @@ function updateTransaction($conn, $id)
     $stmt = $conn->prepare($query);
     $stmt->bind_param('di', $balance, $userid);
     $stmt->execute();
-    
+
     $_SESSION['message'] = "Record and balance updated successfully!";
     $_SESSION['code'] = "success";
     echo json_encode(['success' => true]);

@@ -1,7 +1,6 @@
 <?php
 session_start();
-include("../database/config.php");
-
+require_once '../database/config.php';
 $userid = intval($_SESSION['authUser']['userid']);
 
 // ** Fetch Money Traffic Data **

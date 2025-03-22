@@ -1,6 +1,7 @@
 <?php
 session_start();
-include("../database/config.php");
+// since gawas mani sya sa index.php nga scope need ni sya atleast once same sa registerProcess
+require_once '../database/config.php';
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];

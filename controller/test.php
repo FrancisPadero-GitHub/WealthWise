@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../database/config.php");
+require_once '../database/config.php';
 $userid = intval($_SESSION['authUser']['userid']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dummy_data'])) {

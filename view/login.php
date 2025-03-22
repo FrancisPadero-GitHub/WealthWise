@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,13 +40,9 @@
   ======================================================== -->
 </head>
 
-<?php session_start(); ?>
-
 <body>
-
   <main>
     <div class="container">
-
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
@@ -59,7 +57,7 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">WealthWise</h5>
-                    <p class="text-start small">Please Login First</p>
+                    <p class="text-center small">Login</p>
                   </div>
 
                   <!-- Review this one  -->
@@ -80,10 +78,10 @@
                     </div>
 
                     <div class="col-12">
-                      <div class="form-check">
+                      <!-- <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
                         <label class="form-check-label" for="rememberMe">Remember me</label>
-                      </div>
+                      </div> -->
                     </div>
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit" name="login">Login</button>
@@ -119,9 +117,11 @@
 
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <?php
 
+  <!-- SweetAlert for Toast Notifications -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <?php
   if (isset($_SESSION['message']) && $_SESSION['code'] != '') {
   ?>
     <script>
@@ -129,7 +129,7 @@
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 5000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;

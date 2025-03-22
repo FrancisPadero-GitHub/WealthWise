@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,10 +40,7 @@
   ======================================================== -->
 </head>
 
-<?php session_start(); ?>
-
 <body>
-
   <main>
     <div class="container">
 
@@ -109,14 +108,10 @@
 
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
-
       </section>
-
     </div>
   </main><!-- End #main -->
 
@@ -131,6 +126,11 @@
   <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+  <!-- SweetAlert for Toast Notifications -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <?php
@@ -141,7 +141,7 @@
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 5000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
@@ -159,8 +159,7 @@
   }
   ?>
 
-  <!-- Template Main JS File -->
-  <script src="../assets/js/main.js"></script>
+
 
 </body>
 

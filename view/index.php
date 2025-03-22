@@ -1,6 +1,7 @@
 <?php
 // Start session at the top
 session_start();
+include("../database/config.php");
 ?>
 
 <!DOCTYPE html>
@@ -82,25 +83,30 @@ session_start();
   <!-- SweetAlert for Toast Notifications -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <?php if (!empty($_SESSION['message']) && !empty($_SESSION['code'])): ?>
+  <?php
+  if (isset($_SESSION['message']) && $_SESSION['code'] != '') {
+  ?>
     <script>
-      Swal.fire({
-        icon: "<?php echo $_SESSION['code']; ?>", // 'success' or 'error'
-        title: "<?php echo $_SESSION['message']; ?>",
+      const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.onmouseenter = Swal.stopTimer;
           toast.onmouseleave = Swal.resumeTimer;
         }
       });
+      Toast.fire({
+        icon: "<?php echo $_SESSION['code']; ?>",
+        title: "<?php echo $_SESSION['message']; ?>"
+      });
     </script>
   <?php
-    unset($_SESSION['message'], $_SESSION['code']); // Cleaner unset
-  endif;
+    unset($_SESSION['message']);
+    unset($_SESSION['code']);
+  }
   ?>
 
 </body>

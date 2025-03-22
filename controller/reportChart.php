@@ -1,7 +1,7 @@
 <?php
-session_start();
-include("../database/config.php");
 
+session_start();
+require_once '../database/config.php';
 $userid = intval($_SESSION['authUser']['userid']);
 
 // Fetch expenses

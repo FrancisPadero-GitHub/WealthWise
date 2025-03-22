@@ -11,7 +11,7 @@
   <div class="row">
     <!-- Left side columns -->
     <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 col-xxl-7">
-      <div class="row" style="margin-bottom: 0;">
+      <div class="row">
         <!-- Balance Modal Card -->
         <div class="modal fade" id="editBalanceModal" tabindex="-1" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -200,7 +200,6 @@
                         style="width: 100%; border: none; max-height: 200px; overflow-y: auto;">
                         <!-- Daily Expenses -->
                         <optgroup label="Daily Expenses">
-                          <option disabled>────────────</option>
                           <option value="Food and Drinks">Food and Drinks</option>
                           <option value="Shopping">Shopping</option>
                           <option value="House Rent">House Rent</option>

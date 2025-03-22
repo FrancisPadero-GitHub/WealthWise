@@ -1,7 +1,6 @@
 <?php
-require_once '../database/config.php';
-
 session_start();
+require_once '../database/config.php';
 
 if (isset($_POST['register'])) {
     $firstname = trim($_POST['firstname']);
