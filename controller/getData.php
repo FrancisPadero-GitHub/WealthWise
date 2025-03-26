@@ -211,15 +211,22 @@ if ($stmt5) {
 
 
 /** Tasks Data **/
-$tasksql = "SELECT * FROM tasks WHERE userid = ?";
+$tasksql = "SELECT * FROM tasks WHERE userid = ? ORDER BY is_completed ASC, id DESC";
 $stmtTasks = $conn->prepare($tasksql);
 if ($stmtTasks) {
   $stmtTasks->bind_param("i", $userid);
   if ($stmtTasks->execute()) {
     $fetchResult = $stmtTasks->get_result();
-    $tasksData = [];
+    $tasksData = [
+      'active' => [],
+      'completed' => []
+    ];
     while ($row = $fetchResult->fetch_assoc()) {
-      $tasksData[] = $row;
+      if ($row['is_completed'] === 'yes') {
+        $tasksData['completed'][] = $row; // Completed tasks
+      } else {
+        $tasksData['active'][] = $row; // Active tasks
+      }
     }
   }
   $stmtTasks->close();

@@ -672,21 +672,25 @@
     <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5">
 
       <!-- Reminders -->
-      <div class="card shadow-sm rounded-3">
+      <div class="card shadow-sm">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="card-title fw-bold mb-0">📌 Reminders</h5>
+            <div class="d-flex align-items-center">
+              <img src="../assets/img/icon.png" alt="Icon" width="24" height="24" class="me-2">
+              <h5 class="card-title fw-bold mb-0">Reminders</h5>
+            </div>
             <!-- Add Task Button -->
             <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addTaskModal">
               <i class="bi bi-plus-lg"></i>
             </a>
           </div>
 
-          <!-- Task List -->
+
           <!-- Task List -->
           <ul class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
-            <?php if (!empty($tasksData) && count($tasksData) > 0): ?>
-              <?php foreach ($tasksData as $row): ?>
+            <!-- Active Tasks -->
+            <?php if (!empty($tasksData['active'])): ?>
+              <?php foreach ($tasksData['active'] as $row): ?>
                 <li class="list-group-item d-flex justify-content-between align-items-start py-3">
                   <div class="me-auto">
                     <div class="fw-bold fs-6 mb-1"><?php echo htmlspecialchars($row['title']); ?></div>
@@ -697,6 +701,15 @@
                   </div>
 
                   <div class="d-flex align-items-center">
+                    <!-- Complete Button -->
+                    <form action="../controller/updateTaskStatus.php" method="POST" style="display:inline;">
+                      <input type="hidden" name="taskid" value="<?php echo $row['id']; ?>">
+                      <input type="hidden" name="status" value="yes">
+                      <button type="submit" class="btn btn-outline-success btn-sm me-2">
+                        <i class="bi bi-check-circle"></i>
+                      </button>
+                    </form>
+
                     <!-- Edit Button -->
                     <button class="btn btn-outline-primary btn-sm me-2"
                       data-bs-toggle="modal"
@@ -724,7 +737,46 @@
                 Click + to add a note
               </li>
             <?php endif; ?>
+
+            <!-- Separator -->
+            <?php if (!empty($tasksData['completed'])): ?>
+              <li class="list-group-item text-center text-muted py-2">✔️ Completed Tasks</li>
+            <?php endif; ?>
+
+            <!-- Completed Tasks -->
+            <?php foreach ($tasksData['completed'] as $row): ?>
+              <li class="list-group-item d-flex justify-content-between align-items-start py-3" style="text-decoration: line-through; color: #999;">
+                <div class="me-auto">
+                  <div class="fw-bold fs-6 mb-1"><?php echo htmlspecialchars($row['title']); ?></div>
+                  <div class="text-muted mb-2"><?php echo htmlspecialchars($row['description']); ?></div>
+                  <small class="text-secondary">
+                    <?php echo date('F d, Y H:i', strtotime($row['created_at'])); ?>
+                  </small>
+                </div>
+
+                <div class="d-flex align-items-center">
+                  <!-- Mark as Incomplete Button -->
+                  <form action="../controller/updateTaskStatus.php" method="POST" style="display:inline;">
+                    <input type="hidden" name="taskid" value="<?php echo $row['id']; ?>">
+                    <input type="hidden" name="status" value="no">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm me-2">
+                      <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                  </form>
+
+                  <!-- Delete Button -->
+                  <form action="../controller/deleteTask.php" method="POST" style="display:inline;">
+                    <input type="hidden" name="taskid" value="<?php echo $row['id']; ?>">
+                    <button type="submit" class="btn btn-outline-danger btn-sm"
+                      onclick="return confirm('Are you sure you want to delete this task?');">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </li>
+            <?php endforeach; ?>
           </ul>
+
 
         </div>
       </div>
@@ -734,9 +786,13 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h6 class="modal-title fw-bold" id="addtaskModalLabel">New Task</h6>
+              <div class="d-flex align-items-center">
+                <img src="../assets/img/icon.png" alt="Icon" width="24" height="24" class="me-2">
+                <h6 class="modal-title fw-bold" id="addtaskModalLabel">New Reminder</h6>
+              </div>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
               <form action="../controller/addtask.php" method="POST" novalidate>
                 <div class="row mb-3">
@@ -756,7 +812,7 @@
                 <div class="mb-3">
                   <label for="description" class="form-label">Description</label>
                   <textarea class="form-control" name="description" id="description"
-                    style="height: 150px" maxlength="50"></textarea>
+                    style="height: 150px" maxlength="150"></textarea>
                 </div>
 
                 <div class="text-end">
@@ -776,9 +832,13 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h6 class="modal-title fw-bold" id="editTaskModalLabel">Edit Task</h6>
+              <div class="d-flex align-items-center">
+                <img src="../assets/img/icon.png" alt="Icon" width="24" height="24" class="me-2">
+                <h6 class="modal-title fw-bold" id="editTaskModalLabel">Edit Reminder</h6>
+              </div>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
               <form action="../controller/updateTask.php" method="POST" novalidate>
                 <input type="hidden" name="taskid" id="editTaskId">
@@ -800,7 +860,7 @@
                 <div class="mb-3">
                   <label for="editTaskDescription" class="form-label">Description</label>
                   <textarea class="form-control" name="editTaskDescription" id="editTaskDescription"
-                    style="height: 150px" maxlength="50"></textarea>
+                    style="height: 150px" maxlength="150"></textarea>
                 </div>
 
                 <div class="text-end">
