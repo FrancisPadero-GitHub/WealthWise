@@ -12,11 +12,12 @@
 
 
       <!-- <li class="nav-item">
-        <a class="nav-link" href="index.php?page=transactions">
-          <i class="bi bi-card-list">
-          </i> <span>Records</span>
+        <a class="nav-link active" href="index.php?page=todo">
+          <i class="bi bi-list-check"></i>
+          <span>Reminders</span>
         </a>
       </li> -->
+      <!-- End of to do list Nav -->
 
       <li class="nav-item">
         <a class="nav-link" href="index.php?page=profile">

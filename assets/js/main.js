@@ -468,7 +468,6 @@
     );
 
     const balanceStatus = document.getElementById("balanceStatus");
-    const statusText = document.getElementById("statusText");
 
     if (balance < 0) {
       balanceStatus.classList.remove("text-success", "text-warning");
@@ -485,5 +484,23 @@
     }
   });
 
- 
+  // edit tasks reminder
+  const editTaskModal = document.getElementById("editTaskModal");
+  editTaskModal.addEventListener("show.bs.modal", (event) => {
+    const button = event.relatedTarget; // Button that triggered the modal
+
+    // Extract data from data-* attributes
+    const task_description = button.getAttribute("data-description");
+    const id = button.getAttribute("data-id");
+    const title = button.getAttribute("data-title");
+    const date = button.getAttribute("data-date");
+
+    console.log(description);
+
+    // Fill the form fields
+    document.getElementById("editTaskDescription").value = task_description;
+    document.getElementById("editTaskId").value = id;
+    document.getElementById("editTitle").value = title;
+    document.getElementById("editDate").value = date;
+  });
 })();

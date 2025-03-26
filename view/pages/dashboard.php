@@ -151,9 +151,6 @@
       </div><!-- End cards -->
 
 
-
-
-
       <!--Add Transaction -->
       <div class="d-flex justify-content-between">
         <form action="../controller/test.php" method="POST">
@@ -170,9 +167,6 @@
           <i class="bi bi-plus-lg"></i>
         </a>
       </div>
-
-
-
 
 
       <!-- Add new record modal -->
@@ -547,7 +541,7 @@
                           </span>
                         </td>
                         <td><?php echo date('F, d, Y', strtotime($row['date'])); ?></td>
-                        <td>
+                        <td class="text-center">
                           <span class="badge bg-<?php echo $row['transaction'] === 'expense' ? 'danger' : ($row['transaction'] === 'income' ? 'success' : 'secondary'); ?>">
                             <?php echo htmlspecialchars($row['transaction']); ?>
                           </span>
@@ -577,20 +571,6 @@
       <!-- Reports -->
       <div class="col-12">
         <div class="card">
-
-          <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-              <li class="dropdown-header text-start">
-                <h6>Filter</h6>
-              </li>
-
-              <li><a class="dropdown-item" href="#">Today</a></li>
-              <li><a class="dropdown-item" href="#">This Month</a></li>
-              <li><a class="dropdown-item" href="#">This Year</a></li>
-            </ul>
-          </div>
-
           <div class="card-body">
             <h5 class="card-title">Reports <span>/Today</span></h5>
 
@@ -691,20 +671,158 @@
     <!-- Right side columns -->
     <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5">
 
+      <!-- Reminders -->
+      <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title fw-bold mb-0">📌 Reminders</h5>
+            <!-- Add Task Button -->
+            <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+              <i class="bi bi-plus-lg"></i>
+            </a>
+          </div>
+
+          <!-- Task List -->
+          <!-- Task List -->
+          <ul class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
+            <?php if (!empty($tasksData) && count($tasksData) > 0): ?>
+              <?php foreach ($tasksData as $row): ?>
+                <li class="list-group-item d-flex justify-content-between align-items-start py-3">
+                  <div class="me-auto">
+                    <div class="fw-bold fs-6 mb-1"><?php echo htmlspecialchars($row['title']); ?></div>
+                    <div class="text-muted mb-2"><?php echo htmlspecialchars($row['description']); ?></div>
+                    <small class="text-secondary">
+                      <?php echo date('F d, Y H:i', strtotime($row['created_at'])); ?>
+                    </small>
+                  </div>
+
+                  <div class="d-flex align-items-center">
+                    <!-- Edit Button -->
+                    <button class="btn btn-outline-primary btn-sm me-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editTaskModal"
+                      data-id="<?php echo $row['id']; ?>"
+                      data-title="<?php echo htmlspecialchars($row['title']); ?>"
+                      data-description="<?php echo htmlspecialchars($row['description']); ?>"
+                      data-date="<?php echo date('Y-m-d', strtotime($row['created_at'])); ?>">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+
+                    <!-- Delete Button -->
+                    <form action="../controller/deleteTask.php" method="POST" style="display:inline;">
+                      <input type="hidden" name="taskid" value="<?php echo $row['id']; ?>">
+                      <button type="submit" class="btn btn-outline-danger btn-sm"
+                        onclick="return confirm('Are you sure you want to delete this task?');">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </form>
+                  </div>
+                </li>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <li class="list-group-item text-center text-muted py-3">
+                Click + to add a note
+              </li>
+            <?php endif; ?>
+          </ul>
+
+        </div>
+      </div>
+
+      <!-- Add Task Modal -->
+      <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addtaskModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title fw-bold" id="addtaskModalLabel">New Task</h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="../controller/addtask.php" method="POST" novalidate>
+                <div class="row mb-3">
+                  <!-- Title -->
+                  <div class="col-7">
+                    <label for="inputtitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" name="title" id="inputtitle" required>
+                  </div>
+                  <!-- Date -->
+                  <div class="col-5">
+                    <label for="inputDate" class="form-label">Date</label>
+                    <input type="date" name="date" class="form-control" id="inputDate">
+                  </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control" name="description" id="description"
+                    style="height: 150px" maxlength="50"></textarea>
+                </div>
+
+                <div class="text-end">
+                  <button type="submit" name="addtask" class="btn btn-success">
+                    <i class="bi bi-plus-lg"></i> Add
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of Add Task Modal -->
+
+      <!-- Edit Task Modal -->
+      <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title fw-bold" id="editTaskModalLabel">Edit Task</h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="../controller/updateTask.php" method="POST" novalidate>
+                <input type="hidden" name="taskid" id="editTaskId">
+
+                <div class="row mb-3">
+                  <!-- Title -->
+                  <div class="col-7">
+                    <label for="editTitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" name="title" id="editTitle" required>
+                  </div>
+                  <!-- Date -->
+                  <div class="col-5">
+                    <label for="editDate" class="form-label">Date</label>
+                    <input type="date" name="date" class="form-control" id="editDate">
+                  </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                  <label for="editTaskDescription" class="form-label">Description</label>
+                  <textarea class="form-control" name="editTaskDescription" id="editTaskDescription"
+                    style="height: 150px" maxlength="50"></textarea>
+                </div>
+
+                <div class="text-end">
+                  <button type="submit" name="editTask" class="btn btn-success">
+                    <i class="bi bi-save"></i> Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- End of Reminders -->
+
+
       <!-- Money Traffic -->
       <div class="card">
-        <!-- <div class="filter">
-          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <li class="dropdown-header text-start">
-              <h6>Filter</h6>
-            </li>
-            <li><a class="dropdown-item" href="#">Today</a></li>
-            <li><a class="dropdown-item" href="#">This Month</a></li>
-            <li><a class="dropdown-item" href="#">This Year</a></li>
-          </ul>
-        </div> -->
-
         <div class="card-body pb-0" id="expense">
           <h5 class="card-title">Expense Structure <span>| All Time</span> </h5>
           <div id="trafficChart" class="echart"></div>

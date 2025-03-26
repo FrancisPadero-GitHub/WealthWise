@@ -39,10 +39,8 @@ include("../database/config.php");
 
   <?php
 
-  // Include essential files
-  include("../database/config.php");
+  // Include essential filess
   include("../controller/getData.php"); // pra ni mka kuha ug select statements ang data sa tabales and everythings sa dashboard
-
   include("./includes/topbar.php");
   include("./includes/sidebar.php");
   ?>

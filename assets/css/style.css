@@ -1294,3 +1294,23 @@ h6 {
   height: 55vh;
   width: 100%;
 }
+
+/*--------------------------------------------------------------
+# login and registration bg
+--------------------------------------------------------------*/
+.w-container {
+  background-image: url("../img/bg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 150% 150%;
+}
+.w-container {
+  background-image: url("../img/bg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 150% 150%;
+}
+
+.list-group-item {
+  border-bottom: 1px solid #e9ecef;
+}

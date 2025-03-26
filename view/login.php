@@ -11,9 +11,7 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="../assets/img/wealthwise.png" rel="icon">
-  <link href="../assets/img/wealthwise.png" rel="apple-touch-icon">
+3
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -40,7 +38,7 @@
   ======================================================== -->
 </head>
 
-<body>
+<body class="w-container">
   <main>
     <div class="container">
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">

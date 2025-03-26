@@ -97,7 +97,6 @@ if ($stmtAllTimeExpense) {
   $stmtAllTimeExpense->close();
 }
 
-
 /** Current Month Expenses **/
 $sql3 = "SELECT SUM(amount) AS total FROM transactions WHERE userid = ? AND transaction = 'expense' AND MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE()) ";
 $stmt3 = $conn->prepare($sql3);
@@ -207,4 +206,24 @@ if ($stmt5) {
 }
 /** END OF Profile **/
 
-$conn->close();
+
+// tasks
+
+
+/** Tasks Data **/
+$tasksql = "SELECT * FROM tasks WHERE userid = ?";
+$stmtTasks = $conn->prepare($tasksql);
+if ($stmtTasks) {
+  $stmtTasks->bind_param("i", $userid);
+  if ($stmtTasks->execute()) {
+    $fetchResult = $stmtTasks->get_result();
+    $tasksData = [];
+    while ($row = $fetchResult->fetch_assoc()) {
+      $tasksData[] = $row;
+    }
+  }
+  $stmtTasks->close();
+} else {
+  $_SESSION['message'] = "Error preparing statement for tasks: " . $conn->error;
+  $_SESSION['code'] = "error";
+}
