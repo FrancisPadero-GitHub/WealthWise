@@ -71,19 +71,15 @@ function updateTransaction($conn, $id)
   $category = trim($_POST['category'] ?? '');
   $transaction = strtolower(trim($_POST['transaction'] ?? ''));
   $date = trim($_POST['date'] ?? '');
-  $time = trim($_POST['time'] ?? '');
+
   $payment_type = trim($_POST['account'] ?? '');
   $description = trim($_POST['description'] ?? '');
 
-
-  if (!empty($date) && !empty($time)) {
-    $datetime = date('Y-m-d H:i:s', strtotime("$date $time"));
-  } elseif (!empty($date)) {
-    $datetime = date('Y-m-d H:i:s', strtotime("$date 00:00:00"));
+  if (!empty($date)) {
+    $datetime = date('Y-m-d', strtotime($date));
   } else {
-    $datetime = date('Y-m-d H:i:s');
+    $datetime = date('Y-m-d'); // Default to today’s date if none provided
   }
-
 
   $query = "SELECT amount, transaction, userid FROM transactions WHERE transaction_id = ?";
   $stmt = $conn->prepare($query);

@@ -298,7 +298,7 @@
                 <div class="row mb-3">
                   <div class="col-12">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" name="description" id="description" style="height: 100px" maxlength="255"></textarea>
+                    <textarea class="form-control" name="description" id="description" style="height: 100px" maxlength="150"></textarea>
                   </div>
                 </div>
 
@@ -447,7 +447,7 @@
                 <div class="row mb-3">
                   <div class="col-12">
                     <label for="editDescription" class="form-label">Description</label>
-                    <textarea class="form-control" name="description" id="editDescription" style="height: 100px" maxlength="255"></textarea>
+                    <textarea class="form-control" name="description" id="editDescription" style="height: 100px" maxlength="150"></textarea>
                   </div>
                 </div>
 
@@ -812,7 +812,7 @@
                 <div class="mb-3">
                   <label for="description" class="form-label">Description</label>
                   <textarea class="form-control" name="description" id="description"
-                    style="height: 150px" maxlength="150"></textarea>
+                    style="height: 100px" maxlength="150"></textarea>
                 </div>
 
                 <div class="text-end">
@@ -860,7 +860,7 @@
                 <div class="mb-3">
                   <label for="editTaskDescription" class="form-label">Description</label>
                   <textarea class="form-control" name="editTaskDescription" id="editTaskDescription"
-                    style="height: 150px" maxlength="150"></textarea>
+                    style="height: 100px" maxlength="150"></textarea>
                 </div>
 
                 <div class="text-end">
