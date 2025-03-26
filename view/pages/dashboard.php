@@ -514,7 +514,6 @@
               <table class="table table-borderless table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">#</th> <!-- Row number -->
                     <th scope="col">Category</th>
                     <th scope="col">Description</th>
                     <th scope="col">Amount</th>
@@ -524,15 +523,8 @@
                 </thead>
                 <tbody>
                   <?php if ($result->num_rows > 0): ?>
-                    <?php
-                    $rowNumber = $result->num_rows; // Start from the highest number
-                    while ($row = $result->fetch_assoc()):
-                    ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
                       <tr class="transaction-row" data-id="<?php echo $row['transaction_id']; ?>" style="cursor: pointer;">
-                        <th scope="row">
-                          <!-- Show row number in DESC order -->
-                          <a href="#"><?php echo $rowNumber; ?></a>
-                        </th>
                         <td><?php echo htmlspecialchars($row['category']); ?></td>
                         <td><?php echo htmlspecialchars($row['description']); ?></td>
                         <td>
@@ -540,25 +532,22 @@
                             <?php echo number_format($row['amount'], 2); ?>
                           </span>
                         </td>
-                        <td><?php echo date('F, d, Y', strtotime($row['date'])); ?></td>
+                        <td><?php echo date('F d, Y', strtotime($row['date'])); ?></td>
                         <td class="text-center">
                           <span class="badge bg-<?php echo $row['transaction'] === 'expense' ? 'danger' : ($row['transaction'] === 'income' ? 'success' : 'secondary'); ?>">
                             <?php echo htmlspecialchars($row['transaction']); ?>
                           </span>
                         </td>
                       </tr>
-                      <?php $rowNumber--; // Decrement row number to reflect DESC order 
-                      ?>
                     <?php endwhile; ?>
                   <?php else: ?>
                     <tr>
-                      <td colspan="6" class="text-center">No transactions found.</td>
+                      <td colspan="5" class="text-center">No transactions found.</td>
                     </tr>
                   <?php endif; ?>
                 </tbody>
               </table>
             </div>
-
 
             <!-- End scrollable table -->
 

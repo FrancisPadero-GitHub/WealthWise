@@ -38,16 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dummy_data'])) {
     $sql2 = "
             INSERT INTO `tasks` (`userid`, `title`, `description`, `created_at`, `is_completed`) 
             VALUES 
-            (?, 'Complete Project Proposal', 'Draft and submit the project proposal by the end of the week.', '2025-03-20 09:30:00', 'no'),
-            (?, 'Team Meeting', 'Attend the weekly team meeting to discuss project updates.', '2025-03-21 14:00:00', 'no'),
-            (?, 'Fix Login Bug', 'Investigate and resolve the login issue reported by users.', '2025-03-22 10:00:00', 'yes'),
-            (?, 'Design Homepage', 'Create a new design for the homepage and get approval.', '2025-03-23 11:30:00', 'no'),
-            (?, 'Database Backup', 'Perform a full backup of the production database.', '2025-03-24 08:00:00', 'yes'),
-            (?, 'Update API Docs', 'Update the API documentation to reflect new endpoints.', '2025-03-25 16:00:00', 'no'),
-            (?, 'Prepare Financial Report', 'Compile the financial report for the last quarter.', '2025-03-26 09:00:00', 'yes'),
-            (?, 'Code Review', 'Review the latest code changes and provide feedback.', '2025-03-27 13:00:00', 'no'),
-            (?, 'User Feedback Session', 'Organize a session to gather user feedback.', '2025-03-28 15:00:00', 'yes'),
-            (?, 'Security Audit', 'Conduct a security audit on the main application.', '2025-03-29 10:30:00', 'no');
+            (?, 'Complete Project Proposal', 'Draft and submit the project proposal by the end of the week.', '2025-03-20', 'no'),
+            (?, 'Team Meeting', 'Attend the weekly team meeting to discuss project updates.', '2025-03-21', 'no'),
+            (?, 'Fix Login Bug', 'Investigate and resolve the login issue reported by users.', '2025-03-22', 'yes'),
+            (?, 'Design Homepage', 'Create a new design for the homepage and get approval.', '2025-03-23', 'no'),
+            (?, 'Database Backup', 'Perform a full backup of the production database.', '2025-03-24', 'yes'),
+            (?, 'Update API Docs', 'Update the API documentation to reflect new endpoints.', '2025-03-25', 'no'),
+            (?, 'Prepare Financial Report', 'Compile the financial report for the last quarter.', '2025-03-26', 'yes'),
+            (?, 'Code Review', 'Review the latest code changes and provide feedback.', '2025-03-27', 'no'),
+            (?, 'User Feedback Session', 'Organize a session to gather user feedback.', '2025-03-28', 'yes'),
+            (?, 'Security Audit', 'Conduct a security audit on the main application.', '2025-03-29', 'no');
         ";
 
     $stmt2 = $conn->prepare($sql2);
