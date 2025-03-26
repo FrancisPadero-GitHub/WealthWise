@@ -211,7 +211,7 @@ if ($stmt5) {
 
 
 /** Tasks Data **/
-$tasksql = "SELECT * FROM tasks WHERE userid = ? ORDER BY is_completed ASC, id DESC";
+$tasksql = "SELECT * FROM tasks WHERE userid = ? ORDER BY id DESC";
 $stmtTasks = $conn->prepare($tasksql);
 if ($stmtTasks) {
   $stmtTasks->bind_param("i", $userid);

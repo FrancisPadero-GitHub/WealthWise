@@ -8,8 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editTask"])) {
   $description = trim($_POST["editTaskDescription"]);
   $date = trim($_POST["date"]);
 
-  // ✅ Combine date and time into a single DATETIME value
-  $datetime = !empty($date) ? date('Y-m-d H:i:s', strtotime($date)) : date('Y-m-d H:i:s');
+  // ✅ Use only the date component (remove time)
+  $datetime = !empty($date) ? date('Y-m-d', strtotime($date)) : date('Y-m-d');
+
 
   $sql = "UPDATE tasks SET title=?, description=?, created_at=? WHERE id=?";
 

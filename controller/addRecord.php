@@ -9,17 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_record'])) {
   $category = trim($_POST['category'] ?? '');
   $transaction = strtolower(trim($_POST['transaction'] ?? ''));
   $date = trim($_POST['date'] ?? '');
-  $time = trim($_POST['time'] ?? '');
   $account = trim($_POST['account'] ?? '');
   $description = trim($_POST['description'] ?? '');
 
   // ✅ Combine date and time into a single DATETIME value
-  if (!empty($date) && !empty($time)) {
-    $datetime = date('Y-m-d H:i:s', strtotime("$date $time"));
-  } elseif (!empty($date)) {
-    $datetime = date('Y-m-d H:i:s', strtotime("$date 00:00:00"));
+  if (!empty($date)) {
+    $datetime = date('Y-m-d', strtotime($date));
   } else {
-    $datetime = date('Y-m-d H:i:s');
+    $datetime = date('Y-m-d'); // Default to today’s date if none provided
   }
 
   // ✅ Insert into database using prepared statement

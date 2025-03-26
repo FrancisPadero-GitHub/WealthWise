@@ -696,7 +696,7 @@
                     <div class="fw-bold fs-6 mb-1"><?php echo htmlspecialchars($row['title']); ?></div>
                     <div class="text-muted mb-2"><?php echo htmlspecialchars($row['description']); ?></div>
                     <small class="text-secondary">
-                      <?php echo date('F d, Y H:i', strtotime($row['created_at'])); ?>
+                      <?php echo date('F d, Y ', strtotime($row['created_at'])); ?>
                     </small>
                   </div>
 
@@ -750,7 +750,7 @@
                   <div class="fw-bold fs-6 mb-1"><?php echo htmlspecialchars($row['title']); ?></div>
                   <div class="text-muted mb-2"><?php echo htmlspecialchars($row['description']); ?></div>
                   <small class="text-secondary">
-                    <?php echo date('F d, Y H:i', strtotime($row['created_at'])); ?>
+                    <?php echo date('F d, Y', strtotime($row['created_at'])); ?>
                   </small>
                 </div>
 
