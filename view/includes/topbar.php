@@ -47,7 +47,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="../controller/logout.php">
+              <a class="dropdown-item d-flex align-items-center" href="../controller/profileLogout.php">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>

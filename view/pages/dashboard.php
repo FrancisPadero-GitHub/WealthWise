@@ -17,7 +17,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
 
-              <form id="editBalanceForm" action="../controller/edit_balance.php" method="POST">
+              <form id="editBalanceForm" action="../controller/homeBalanceUpdate.php" method="POST">
                 <div class="modal-header">
                   <h5 class="modal-title" id="editBalanceModalLabel">Edit Balance</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -151,18 +151,15 @@
       </div><!-- End cards -->
 
 
-      <!--Add Transaction -->
+      <!--Add Button & Dummy Data -->
       <div class="d-flex justify-content-between">
-        <form action="../controller/test.php" method="POST">
+        <form action="../controller/homeGenerateData.php" method="POST">
           <button type="submit" name="dummy_data" class="btn btn-secondary" title="Generate dummy data for testing">
             <i class="bi bi-box-seam"></i> Generate
           </button>
         </form>
 
-        <!-- <button type="submit" name="reset_data" class="btn btn-danger" title="Reset all data">
-          <i class="bi bi-arrow-counterclockwise"></i> Reset Data
-        </button> -->
-
+        <!--Add Dummy Data -->
         <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRecordModal">
           <i class="bi bi-plus-lg"></i>
         </a>
@@ -178,7 +175,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form action="../controller/addRecord.php" method="POST" novalidate>
+              <form action="../controller/transactionAddRecord.php" method="POST" novalidate>
                 <div class="row mb-3">
                   <!-- Amount -->
                   <div class="col-md-4">
@@ -323,7 +320,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="editRecordForm" action="../controller/updateRecord.php" method="POST" novalidate>
+              <form id="editRecordForm" action="../controller/transactionUpdate&DeleteRecord.php" method="POST" novalidate>
                 <!-- Hidden ID field -->
                 <input type="hidden" name="transaction_id" id="editTransactionId">
 
@@ -572,7 +569,7 @@
 
                 async function loadReportData() {
                   try {
-                    const response = await fetch(`../controller/reportChart.php`);
+                    const response = await fetch(`../controller/homeReportLineChart.php`);
                     const data = await response.json();
 
                     const expenses = data.expenses.map(item => ({
@@ -691,7 +688,7 @@
 
                   <div class="d-flex align-items-center">
                     <!-- Complete Button -->
-                    <form action="../controller/updateTaskStatus.php" method="POST" style="display:inline;">
+                    <form action="../controller/remindersUpdateTaskStatus.php" method="POST" style="display:inline;">
                       <input type="hidden" name="taskid" value="<?php echo $row['id']; ?>">
                       <input type="hidden" name="status" value="yes">
                       <button type="submit" class="btn btn-outline-success btn-sm me-2">
@@ -711,7 +708,7 @@
                     </button>
 
                     <!-- Delete Button -->
-                    <form action="../controller/deleteTask.php" method="POST" style="display:inline;">
+                    <form action="../controller/remindersDeleteTask.php" method="POST" style="display:inline;">
                       <input type="hidden" name="taskid" value="<?php echo $row['id']; ?>">
                       <button type="submit" class="btn btn-outline-danger btn-sm"
                         onclick="return confirm('Are you sure you want to delete this task?');">
@@ -745,7 +742,7 @@
 
                 <div class="d-flex align-items-center">
                   <!-- Mark as Incomplete Button -->
-                  <form action="../controller/updateTaskStatus.php" method="POST" style="display:inline;">
+                  <form action="../controller/remindersUpdateTaskStatus.php" method="POST" style="display:inline;">
                     <input type="hidden" name="taskid" value="<?php echo $row['id']; ?>">
                     <input type="hidden" name="status" value="no">
                     <button type="submit" class="btn btn-outline-secondary btn-sm me-2">
@@ -754,7 +751,7 @@
                   </form>
 
                   <!-- Delete Button -->
-                  <form action="../controller/deleteTask.php" method="POST" style="display:inline;">
+                  <form action="../controller/remindersDeleteTask.php" method="POST" style="display:inline;">
                     <input type="hidden" name="taskid" value="<?php echo $row['id']; ?>">
                     <button type="submit" class="btn btn-outline-danger btn-sm"
                       onclick="return confirm('Are you sure you want to delete this task?');">
@@ -783,7 +780,7 @@
             </div>
 
             <div class="modal-body">
-              <form action="../controller/addtask.php" method="POST" novalidate>
+              <form action="../controller/remindersAddTask.php" method="POST" novalidate>
                 <div class="row mb-3">
                   <!-- Title -->
                   <div class="col-7">
@@ -829,7 +826,7 @@
             </div>
 
             <div class="modal-body">
-              <form action="../controller/updateTask.php" method="POST" novalidate>
+              <form action="../controller/remindersUpdateTask.php" method="POST" novalidate>
                 <input type="hidden" name="taskid" id="editTaskId">
 
                 <div class="row mb-3">
@@ -870,7 +867,7 @@
       <!-- End of Reminders -->
 
 
-      <!-- Money Traffic -->
+      <!-- Expense Pie Chart -->
       <div class="card">
         <div class="card-body pb-0" id="expense">
           <h5 class="card-title">Expense Structure <span>| All Time</span> </h5>
@@ -879,7 +876,7 @@
             // Fetch data from PHP
             async function loadChartData() {
               try {
-                const response = await fetch('../controller/expenseChart.php');
+                const response = await fetch('../controller/homeExpensePieChart.php');
                 const data = await response.json();
 
                 // Initialize ECharts
@@ -933,16 +930,16 @@
 
         </div>
       </div>
+      <!-- End of Expense Pie Chart -->
 
-
-      <!-- Budget Report -->
+      <!-- Expense bar Chart -->
       <div class="card">
         <!-- Bar Chart -->
         <div id="barChart"></div>
 
         <script>
           document.addEventListener("DOMContentLoaded", () => {
-            fetch('../controller/expenseChart2.php')
+            fetch('../controller/homeExpenseBarChart.php')
               .then(response => response.json())
               .then(data => {
                 const categories = data.map(item => item.category);
@@ -980,7 +977,7 @@
           });
         </script>
         <!-- End Bar Chart -->
-      </div><!-- End Budget Report -->
+      </div><!-- End Expense bar Chart -->
 
     </div><!-- End Right side columns -->
   </div>

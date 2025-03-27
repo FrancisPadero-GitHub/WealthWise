@@ -1,6 +1,12 @@
 <?php
-session_start();
 require_once '../database/config.php';
+
+// Check if the user is authenticated or not before displaying or redirecting to dashboard
+if (!isset($_SESSION['authUser']['userid'])) {
+  setSessionMessage("User not authenticated!", "error");
+  header("Location: ../view/login.php");
+  exit();
+}
 
 $userid = intval($_SESSION['authUser']['userid']);
 

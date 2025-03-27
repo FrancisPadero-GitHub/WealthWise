@@ -345,7 +345,17 @@
     }, 200);
   }
 
-  // Manual added prancisss
+  /**
+   *
+   *
+   *
+   *
+   *  Manually by added prancisss
+   *
+   *
+   *
+   *
+   */
   // Edit Transaction
   document.addEventListener("DOMContentLoaded", () => {
     // Get all rows with the class "transaction-row"
@@ -365,7 +375,9 @@
     // Function to open the Edit Modal
     function openEditModal(transactionId) {
       // Example: Fetch transaction data from backend using transactionId
-      fetch(`../controller/updateRecord.php?id=${transactionId}`)
+      fetch(
+        `../controller/transactionUpdate&DeleteRecord.php?id=${transactionId}`
+      )
         .then((response) => response.json())
         .then((data) => {
           // Populate the modal fields
@@ -400,7 +412,7 @@
 
         const formData = new FormData(event.target);
 
-        fetch("../controller/updateRecord.php", {
+        fetch("../controller/transactionUpdate&DeleteRecord.php", {
           method: "POST",
           body: formData,
         })
@@ -434,7 +446,7 @@
           transactionId &&
           confirm("Are you sure you want to delete this record?")
         ) {
-          fetch("../controller/updateRecord.php", {
+          fetch("../controller/transactionUpdate&DeleteRecord.php", {
             method: "POST",
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
