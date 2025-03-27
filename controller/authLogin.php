@@ -1,16 +1,13 @@
 <?php
 session_start();
-// since gawas mani sya sa index.php nga scope need ni sya atleast once same sa registerProcess
 require_once '../database/config.php';
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Use prepared statements for security
     $login_query = "SELECT `userid`, `first_name`, `last_name`, `email`, `password` FROM `Accounts` WHERE email = ?";
     $stmt = mysqli_prepare($conn, $login_query);
-
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
@@ -25,30 +22,30 @@ if (isset($_POST['login'])) {
                 $_SESSION['authUser'] = [
                     'userid' => $data['userid'],
                     'first_name' => $data['first_name'],
-                    'last_namename' => $data['last_name'],
+                    'last_name' => $data['last_name'],
                     'email' => $data['email']
                 ];
 
-                header("Location: ../view/index.php"); // Redirect to a user dashboard
+                header("Location: ../view/index.php");
                 exit();
             } else {
-                $_SESSION['message'] = "Invalid email or Password";
-                $_SESSION['code'] = "error";
-                header("Location: ../view/login.php");
-                exit();
+                setSessionMessage("Invalid email or Password", "error", "../view/login.php");
             }
         } else {
-            $_SESSION['message'] = "Invalid email or Password";
-            $_SESSION['code'] = "error";
-            header("Location: ../view/login.php");
-            exit();
+            setSessionMessage("Invalid email or Password", "error", "../view/login.php");
         }
     } else {
-        $_SESSION['message'] = "Database error: " . mysqli_error($conn);
-        $_SESSION['code'] = "error";
-        header("Location: ../view/login.php");
-        exit();
+        setSessionMessage("Database error: " . mysqli_error($conn), "error", "../view/login.php");
     }
 }
 
 $conn->close();
+
+// ✅ Helper function for setting session messages and redirecting
+function setSessionMessage($message, $code, $redirect)
+{
+    $_SESSION['message'] = $message;
+    $_SESSION['code'] = $code;
+    header("Location: $redirect");
+    exit();
+}

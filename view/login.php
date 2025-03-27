@@ -58,7 +58,7 @@
                   </div>
 
                   <!-- Login Form -->
-                  <form method="POST" action="../controller/loginProcess.php" class="needs-validation" novalidate>
+                  <form method="POST" action="../controller/authLogin.php" class="needs-validation" novalidate>
                     <!-- Email Input -->
                     <div class="mb-3">
                       <label for="yourUsername" class="form-label fw-medium">Email Address</label>

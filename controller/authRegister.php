@@ -11,18 +11,12 @@ if (isset($_POST['register'])) {
 
     // Validate required fields
     if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($cpassword)) {
-        $_SESSION['status'] = "All fields are required!";
-        $_SESSION['status_code'] = "error";
-        header("Location: ../view/registration.php");
-        exit();
+        setSessionMessage("All fields are required!", "error", "../view/registration.php");
     }
 
     // Check if passwords match
     if ($password !== $cpassword) {
-        $_SESSION['status'] = "Passwords do not match!";
-        $_SESSION['status_code'] = "error";
-        header("Location: ../view/registration.php");
-        exit();
+        setSessionMessage("Passwords do not match!", "error", "../view/registration.php");
     }
 
     // Check if email already exists
@@ -33,10 +27,7 @@ if (isset($_POST['register'])) {
     $result = mysqli_stmt_get_result($stmt);
 
     if (mysqli_num_rows($result) > 0) {
-        $_SESSION['status'] = "email is already taken.";
-        $_SESSION['status_code'] = "error";
-        header("Location: ../view/registration.php");
-        exit();
+        setSessionMessage("Email already taken!", "error", "../view/registration.php");
     }
 
     // Hash the password before storing it
@@ -51,22 +42,22 @@ if (isset($_POST['register'])) {
         $execute = mysqli_stmt_execute($stmt);
 
         if ($execute) {
-            $_SESSION['message'] = "Registration Successful!";
-            $_SESSION['code'] = "success";
-            header("Location: ../view/login.php");
-            exit();
+            setSessionMessage("Registration Successful!", "success", "../view/login.php");
         } else {
-            $_SESSION['message'] = "Database error: " . mysqli_error($conn);
-            $_SESSION['code'] = "error";
-            header("Location: ../view/registration.php");
-            exit();
+            setSessionMessage("Database error: " . mysqli_error($conn), "error", "../view/registration.php");
         }
     } else {
-        $_SESSION['message'] = "Error preparing statement!";
-        $_SESSION['code'] = "error";
-        header("Location: ../view/registration.php");
-        exit();
+        setSessionMessage("Error preparing statement!", "error", "../view/registration.php");
     }
 }
 
 $conn->close();
+
+// ✅ Helper function for setting session messages and redirecting
+function setSessionMessage($message, $code, $redirect)
+{
+    $_SESSION['message'] = $message;
+    $_SESSION['code'] = $code;
+    header("Location: $redirect");
+    exit();
+}

@@ -55,7 +55,7 @@
                   </div>
 
 
-                  <form class="row g-4 needs-validation" action="../controller/registerProcess.php" method="POST" novalidate>
+                  <form class="row g-4 needs-validation" action="../controller/authRegister.php" method="POST" novalidate>
                     <div class="row">
                       <!-- Column 1 -->
                       <div class="col-md-6">

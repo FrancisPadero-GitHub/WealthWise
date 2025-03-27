@@ -31,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_record'])) {
     $stmt->bind_param("idsssss", $userid, abs($amount), $category, $transaction, $datetime, $account, $description);
 
     if ($stmt->execute()) {
-      header("Location: ../view/index.php");
       setSessionMessage("Record added successfully!", "success",);
     } else {
       setSessionMessage("Database error: " . $stmt->error, "error",);
@@ -46,6 +45,7 @@ $conn->close();
 // ✅ Helper function for setting session messages and redirecting
 function setSessionMessage($message, $code)
 {
+  header("Location: ../view/index.php");
   $_SESSION['message'] = $message;
   $_SESSION['code'] = $code;
   exit();
