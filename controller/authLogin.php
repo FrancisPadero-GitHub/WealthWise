@@ -8,6 +8,7 @@ if (isset($_POST['login'])) {
 
     $login_query = "SELECT `userid`, `first_name`, `last_name`, `email`, `password` FROM `Accounts` WHERE email = ?";
     $stmt = mysqli_prepare($conn, $login_query);
+
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
@@ -25,17 +26,15 @@ if (isset($_POST['login'])) {
                     'last_name' => $data['last_name'],
                     'email' => $data['email']
                 ];
-
-                header("Location: ../view/index.php");
-                exit();
+                setSessionMessage("Welcome to WealthWise", "success", "../view/index.php");
             } else {
                 setSessionMessage("Invalid email or Password", "error", "../view/login.php");
             }
         } else {
-            setSessionMessage("Invalid email or Password", "error", "../view/login.php");
+            setSessionMessage("Database error: " . mysqli_error($conn), "error", "../view/login.php");
         }
     } else {
-        setSessionMessage("Database error: " . mysqli_error($conn), "error", "../view/login.php");
+        setSessionMessage("Error preparing statement!", "error", "../view/login.php");
     }
 }
 

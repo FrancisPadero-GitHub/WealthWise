@@ -3,24 +3,19 @@
 session_start();
 include("../database/config.php");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>WealthWise</title>
-
   <!-- Favicons -->
   <link rel="icon" href="../assets/img/wealthwise.png">
   <link rel="apple-touch-icon" href="../assets/img/wealthwise.png">
-
   <!-- Google Fonts (Consolidated for better performance) -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Nunito:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
@@ -30,39 +25,31 @@ include("../database/config.php");
   <link rel="stylesheet" href="../assets/vendor/remixicon/remixicon.css">
   <link rel="stylesheet" href="../assets/vendor/simple-datatables/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
-
   <?php
-
-  // Include essential filess
-  include("../controller/getData.php"); // pra ni mka kuha ug select statements ang data sa tabales and everythings sa dashboard
+  ob_start();
+  include("../controller/getData.php");
   include("./includes/topbar.php");
   include("./includes/sidebar.php");
   ?>
-
   <div class="wrapper">
     <main id="main" class="main">
       <?php
-      // Load the page dynamically based on URL
-      $page = $_GET['page'] ?? 'dashboard'; // Use null coalescing for cleaner syntax
+      $page = $_GET['page'] ?? 'dashboard';
       $path = "./pages/$page.php";
       if (file_exists($path)) {
         include($path);
       } else {
-        include('./pages/404.php'); // Fallback to 404 page
+        include('./pages/404.php');
       }
       ?>
     </main>
   </div>
-
-
   <?php include("./includes/footer.php"); ?>
-
   <!-- Back to Top Button -->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
     <i class="bi bi-arrow-up-short"></i>
@@ -109,7 +96,6 @@ include("../database/config.php");
     unset($_SESSION['code']);
   }
   ?>
-
 </body>
 
 </html>
