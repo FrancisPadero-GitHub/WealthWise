@@ -49,13 +49,14 @@
             <div class="col-lg-7 col-md-10 col-sm-12">
               <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-5">
-                  <div class="text-center" style="margin-bottom: 70px;">
-                    <h5 class="card-title fs-3 fw-bold text-primary mb-0">WealthWise</h5>
+
+                  <div class="text-center mb-4">
+                    <h2 class="logo-title text-primary">WealthWise</h2>
                     <p class="text-muted">Create an Account</p>
                   </div>
 
 
-                  <form class="row g-4 needs-validation" action="../controller/authRegister.php" method="POST" novalidate>
+                  <form class="needs-validation" action="../controller/authRegister.php" method="POST" novalidate>
                     <div class="row">
                       <!-- Column 1 -->
                       <div class="col-md-6">
@@ -78,16 +79,19 @@
 
                       <!-- Column 2 -->
                       <div class="col-md-6">
+
                         <div class="mb-3">
                           <label for="yourPassword" class="form-label fw-medium">Password</label>
                           <input type="password" name="password" class="form-control rounded-3" id="yourPassword" required>
                           <div class="invalid-feedback">Please enter your password!</div>
                         </div>
+
                         <div class="mb-3">
                           <label for="confirmPassword" class="form-label fw-medium">Confirm Password</label>
                           <input type="password" name="cpassword" class="form-control rounded-3" id="confirmPassword" required>
                           <div class="invalid-feedback">Please confirm your password!</div>
                         </div>
+
                         <div class="form-check mb-3">
                           <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
                           <label class="form-check-label" for="acceptTerms" style="font-size: 14px;">
@@ -95,9 +99,11 @@
                           </label>
                           <div class="invalid-feedback">You must agree before submitting.</div>
                         </div>
+
                         <button class="btn btn-primary w-100 mb-3 rounded-3 fw-medium" type="submit" name="register">
-                          Create Account
+                          <i class="bi bi-person-plus me-2"></i> Create Account
                         </button>
+
                         <p class="small text-center mb-0" style="font-size: 14px;">
                           Already have an account? <a href="login.php" class="text-decoration-underline">Log in</a>
                         </p>

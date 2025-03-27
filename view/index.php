@@ -1,5 +1,4 @@
 <?php
-// Start session at the top
 session_start();
 include("../database/config.php");
 ?>
@@ -31,8 +30,8 @@ include("../database/config.php");
 
 <body>
   <?php
-  ob_start();
-  include("../controller/getData.php");
+  ob_start(); // output buffering for $_SESSIONS[] and header() to work together
+  include("../controller/homeFetchData.php");
   include("./includes/topbar.php");
   include("./includes/sidebar.php");
   ?>

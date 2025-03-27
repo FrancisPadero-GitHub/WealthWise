@@ -50,11 +50,12 @@
             <div class="col-lg-5 col-md-8">
 
               <div class="card shadow-lg border-0 rounded-4">
+                
                 <div class="card-body p-5">
                   <!-- Title Section -->
                   <div class="text-center mb-4">
-                    <h5 class="card-title fs-3 fw-bold text-primary">WealthWise</h5>
-                    <p class="text-muted mb-0">Login to your account</p>
+                    <h2 class="logo-title text-primary">WealthWise</h2>
+                    <p class="text-muted">Login to your account</p>
                   </div>
 
                   <!-- Login Form -->

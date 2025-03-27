@@ -522,8 +522,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                  <?php if ($transactions->num_rows > 0): ?>
+                    <?php while ($row = $transactions->fetch_assoc()): ?>
                       <tr class="transaction-row" data-id="<?php echo $row['transaction_id']; ?>" style="cursor: pointer;">
                         <td><?php echo htmlspecialchars($row['category']); ?></td>
                         <td><?php echo htmlspecialchars($row['description']); ?></td>
